@@ -66,7 +66,7 @@ onMounted(() => {
   window.addEventListener("resize", () => {
     更新侧边栏宽度()
     屏幕小于900()
-    
+
   })
   屏幕小于900()
   RouterLinkClick()
@@ -154,17 +154,21 @@ function schemelister() {
 
 function headerOpenClose(value) {
   if (header900) {
-    headerIsOpen()
+    headerToOpen()
   } else if (value) {
-    headerElement.classList.toggle("headerClose")
-    headerIsClose = !headerIsClose
-    更新侧边栏宽度()
+    headerToClose()
   }
+}
+
+function headerToClose() {
+  headerElement.classList.toggle("headerClose")
+  headerIsClose = !headerIsClose
+  更新侧边栏宽度()
 }
 
 const headerBg = ref(false)
 
-function headerIsOpen(value = true) {
+function headerToOpen(value = true) {
   if (!value) {//大于900
     headerElement.classList.remove("headerOpen")
     headerIsClose = false
@@ -181,8 +185,9 @@ function 屏幕小于900() {
   if (document.documentElement.scrollWidth <= 900 && !header900) {
     header_width.value = '0px'
     header900 = true
+    headerIsClose ? headerToClose() : null
   } else if (document.documentElement.scrollWidth > 900 && header900) {
-    headerIsOpen(false)
+    headerToOpen(false)
     header900 = false
   }
 }
