@@ -1,0 +1,49 @@
+@import '/src/assets/base.css';
+
+#app {
+  display: flex;
+  height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: var(--defaultColor);
+  transition: 0.2s;
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+
+main {
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+.navClickAnimation {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20%;
+  height: 100%;
+  background-color: rgb(189, 189, 189);
+  animation: navClickAnimation .3s ease-out forwards;
+  transform-origin: center center;
+}
+
+@keyframes navClickAnimation {
+  from {
+    width: 20%;
+  }
+
+  to {
+    background-color: rgba(221, 221, 221, 0.1);
+    width: 100%;
+  }
+}
