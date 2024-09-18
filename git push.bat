@@ -3,5 +3,5 @@ git add .
 git commit -m "%date%%time%"
 git branch -m main
 git push -u origin main
-::123
+::123456
 pause
