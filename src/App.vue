@@ -34,9 +34,12 @@
   </header>
 
   <section :style="{ paddingLeft: header_width }">
-    <div class="headerOpenBtn a" @click="headerOpenClose(true)">
-      <span>三</span>
+    <div class="sectionHeader">
+      <div class="headerOpenBtn a" @click="headerOpenClose(true)">
+        <span>三</span>
+      </div>
     </div>
+
     <!-- <section> -->
     <!-- <RouterView /> -->
 
@@ -66,7 +69,7 @@ onMounted(() => {
   window.addEventListener("resize", () => {
     更新侧边栏宽度()
     屏幕小于900()
-    
+
   })
   屏幕小于900()
   RouterLinkClick()
@@ -309,20 +312,28 @@ section {
   flex: 1;
   overflow-x: hidden;
   transition: .3s;
+  position: relative;
+}
+
+.sectionHeader {
+  padding: 5px;
+  box-shadow: 0px 0px 20px var(--defaultBoxShadowColor);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--defaultBgColor);
 }
 
 .headerOpenBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: fixed;
-  bottom: 10%;
-  left: 5%;
-  font-size: 20px;
-  --wh: 40px;
+  font-size: 16px;
+  --wh: 30px;
   width: var(--wh);
   height: var(--wh);
-  border-radius: 50%;
+  border-radius: 6px;
   background: rgb(0, 187, 93);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   opacity: 0.5;
