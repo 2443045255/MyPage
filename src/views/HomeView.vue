@@ -20,7 +20,6 @@ main {
 .testdiv {
   height: 100vh;
   display: flex;
-  justify-content: end;
   align-items: start;
 }
 </style>

@@ -33,12 +33,13 @@
     </div>
   </header>
 
-  <section :style="{ paddingLeft: header_width }">
-    <div class="sectionHeader" :style="{ marginLeft: header_width }">
+  <section :style="{ marginLeft: header_width + px }">
+    <div class="sectionHeader" :style="{ top: sectionEM已滚动高度 + px }">
       <div class="headerOpenBtn a" @click="headerOpenClose(true)">
         <span>三</span>
       </div>
     </div>
+
 
     <!-- <section> -->
     <!-- <RouterView /> -->
@@ -59,30 +60,32 @@ import { ref, onMounted } from 'vue'
 
 
 const header_width = ref("0px")
-var headerElement
+var px = 'px'
+var headerEM
 var headerIsClose = false
-
+var sectionEM
 onMounted(() => {
-  headerElement = document.querySelector("header")
-
+  headerEM = document.querySelector("header")
+  sectionEM = document.querySelector("section")
   更新侧边栏宽度()
+  sectionEM.addEventListener('scroll', () => {
+    计算sectionEM已滚动高度()
+  })
   window.addEventListener("resize", () => {
     更新侧边栏宽度()
     屏幕小于900()
-
   })
   屏幕小于900()
   RouterLinkClick()
   schemelister()
-
 })
 
 function 更新侧边栏宽度() {
   if (document.documentElement.scrollWidth <= 900) { return }
   if (headerIsClose) {
     header_width.value = 0
-  } else if (header_width.value != headerElement.scrollWidth + 'px') {
-    header_width.value = headerElement.scrollWidth + 'px'
+  } else if (header_width.value != headerEM.scrollWidth) {
+    header_width.value = headerEM.scrollWidth
   }
 }
 
@@ -95,10 +98,10 @@ function RouterLink动画完成() {
   })
 }
 
-let 防抖1 = null
 function RouterLinkClick() {
   var navA_all = document.querySelectorAll("nav a")
   navA_all.forEach((e, num) => {
+    let 防抖1 = null
     e.addEventListener("mousedown", () => {
       var navClickAnimation = document.createElement("span")
       navClickAnimation.className = "navClickAnimation"
@@ -164,7 +167,7 @@ function headerOpenClose(value) {
 }
 
 function headerToClose() {
-  headerElement.classList.toggle("headerClose")
+  headerEM.classList.toggle("headerClose")
   headerIsClose = !headerIsClose
   更新侧边栏宽度()
 }
@@ -173,11 +176,11 @@ const headerBg = ref(false)
 
 function headerToOpen(value = true) {
   if (!value) {//大于900
-    headerElement.classList.remove("headerOpen")
+    headerEM.classList.remove("headerOpen")
     headerIsClose = false
     headerBg.value = false
   } else {//小于900
-    headerElement.classList.toggle("headerOpen")
+    headerEM.classList.toggle("headerOpen")
     headerIsClose = !headerIsClose
     headerBg.value = !headerBg.value
   }
@@ -186,7 +189,7 @@ function headerToOpen(value = true) {
 let header900 = false
 function 屏幕小于900() {
   if (document.documentElement.scrollWidth <= 900 && !header900) {
-    header_width.value = '0px'
+    header_width.value = 0
     header900 = true
     headerIsClose ? headerToClose() : null
   } else if (document.documentElement.scrollWidth > 900 && header900) {
@@ -195,7 +198,10 @@ function 屏幕小于900() {
   }
 }
 
-
+const sectionEM已滚动高度 = ref('0px')
+function 计算sectionEM已滚动高度() {
+  sectionEM已滚动高度.value = sectionEM.scrollTop
+}
 
 </script>
 
@@ -318,18 +324,18 @@ section {
   overflow-x: hidden;
   transition: .3s;
   position: relative;
+  --headerPadding: 219px;
 }
 
 .sectionHeader {
   padding: 5px;
-  box-shadow: 0px 0px 20px var(--defaultBoxShadowColor);
-  position: fixed;
+  box-shadow: 0 2px 4px 0 var(--defaultBoxShadowColor);
+  position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   width: 100%;
   background: var(--defaultBgColor);
-  z-index: 4;
-  transition: margin 0.3s;
+  z-index: 3;
 }
 
 .headerOpenBtn {
@@ -345,6 +351,7 @@ section {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   opacity: 0.5;
   z-index: 4;
+  transition: 0.3s;
 }
 
 .RouterView-enter-active,
@@ -353,17 +360,18 @@ section {
 }
 
 .RouterView-enter-from {
-  transform: translateX(10%);
+  /* transform: translateX(10%); */
 }
 
 .RouterView-leave-to {
   opacity: 0;
-  transform: translateX(-10%);
+  /* transform: translateX(-10%); */
 }
 
 @media (max-width:900px) {
   header {
     transform: translateX(-100%);
+    border: 0;
   }
 }
 </style>
