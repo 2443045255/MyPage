@@ -34,7 +34,7 @@
   </header>
 
   <section :style="{ paddingLeft: header_width }">
-    <div class="sectionHeader">
+    <div class="sectionHeader" :style="{ marginLeft: header_width }">
       <div class="headerOpenBtn a" @click="headerOpenClose(true)">
         <span>三</span>
       </div>
@@ -328,6 +328,8 @@ section {
   left: 0;
   width: 100%;
   background: var(--defaultBgColor);
+  z-index: 4;
+  transition: margin 0.3s;
 }
 
 .headerOpenBtn {
