@@ -35,7 +35,7 @@
 
   <section :style="{ marginLeft: header_width + px }">
     <div class="sectionHeader" :style="{ top: sectionEM已滚动高度 + px }">
-      <div class="headerOpenBtn a" @click="headerOpenClose(true)">
+      <div class="headerOpenBtn default-hoverBg a" @click="headerOpenClose(true)">
         <span>三</span>
       </div>
     </div>
@@ -324,7 +324,6 @@ section {
   overflow-x: hidden;
   transition: .3s;
   position: relative;
-  --headerPadding: 219px;
 }
 
 .sectionHeader {
@@ -347,9 +346,6 @@ section {
   width: var(--wh);
   height: var(--wh);
   border-radius: 6px;
-  background: rgb(0, 187, 93);
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  opacity: 0.5;
   z-index: 4;
   transition: 0.3s;
 }
