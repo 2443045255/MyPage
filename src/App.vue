@@ -359,9 +359,9 @@ section {
   transition: 0.3s ease-in-out;
 }
 
-.RouterView-enter-from {
-  /* transform: translateX(10%); */
-}
+/* .RouterView-enter-from {
+  transform: translateX(10%);
+} */
 
 .RouterView-leave-to {
   opacity: 0;
