@@ -64,9 +64,11 @@ var px = 'px'
 var headerEM
 var headerIsClose = false
 var sectionEM
+var sectionHeaderClass
 onMounted(() => {
   headerEM = document.querySelector("header")
   sectionEM = document.querySelector("section")
+  sectionHeaderClass = document.querySelector(".sectionHeader")
   更新侧边栏宽度()
   sectionEM.addEventListener('scroll', () => {
     计算sectionEM已滚动高度()
@@ -78,6 +80,7 @@ onMounted(() => {
   屏幕小于900()
   RouterLinkClick()
   schemelister()
+  同步sectionEM头部高度()
 })
 
 function 更新侧边栏宽度() {
@@ -201,6 +204,11 @@ function 屏幕小于900() {
 const sectionEM已滚动高度 = ref('0px')
 function 计算sectionEM已滚动高度() {
   sectionEM已滚动高度.value = sectionEM.scrollTop
+}
+
+
+function 同步sectionEM头部高度(){
+  sectionEM.style.paddingTop = sectionHeaderClass.clientHeight+'px'
 }
 
 </script>
@@ -341,8 +349,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  --wh: 30px;
+  font-size: 20px;
+  --wh: 35px;
   width: var(--wh);
   height: var(--wh);
   border-radius: 6px;
