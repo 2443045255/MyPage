@@ -34,7 +34,7 @@
   </header>
 
   <section :style="{ marginLeft: header_width + px }">
-    <div class="sectionHeader" :style="{ top: sectionEM已滚动高度 + px }">
+    <div class="sectionBtnGroup">
       <div class="headerOpenBtn default-hoverBg a" @click="headerOpenClose(true)">
         <span>三</span>
       </div>
@@ -64,14 +64,11 @@ var px = 'px'
 var headerEM
 var headerIsClose = false
 var sectionEM
-var sectionHeaderClass
 onMounted(() => {
   headerEM = document.querySelector("header")
   sectionEM = document.querySelector("section")
-  sectionHeaderClass = document.querySelector(".sectionHeader")
   更新侧边栏宽度()
   sectionEM.addEventListener('scroll', () => {
-    计算sectionEM已滚动高度()
   })
   window.addEventListener("resize", () => {
     更新侧边栏宽度()
@@ -80,7 +77,6 @@ onMounted(() => {
   屏幕小于900()
   RouterLinkClick()
   schemelister()
-  同步sectionEM头部高度()
 })
 
 function 更新侧边栏宽度() {
@@ -201,15 +197,6 @@ function 屏幕小于900() {
   }
 }
 
-const sectionEM已滚动高度 = ref('0px')
-function 计算sectionEM已滚动高度() {
-  sectionEM已滚动高度.value = sectionEM.scrollTop
-}
-
-
-function 同步sectionEM头部高度(){
-  sectionEM.style.paddingTop = sectionHeaderClass.clientHeight+'px'
-}
 
 </script>
 
@@ -334,14 +321,11 @@ section {
   position: relative;
 }
 
-.sectionHeader {
-  padding: 5px;
-  box-shadow: 0 2px 4px 0 var(--defaultBoxShadowColor);
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100%;
-  background: var(--defaultBgColor);
+.sectionBtnGroup {
+  padding: 10px;
+  position: fixed;
+  bottom: 2rem;
+  left: 0;
   z-index: 3;
 }
 
@@ -356,6 +340,8 @@ section {
   border-radius: 6px;
   z-index: 4;
   transition: 0.3s;
+  background: var(--defaultBtnTanColor);
+  color: var(--defaultColor-1);
 }
 
 .RouterView-enter-active,
