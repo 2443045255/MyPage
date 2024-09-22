@@ -12,10 +12,11 @@
   <div id="app"></div>
   <script type="module" src="/src/main.js"></script>
   <script>
-    if (location.host + location.href == "2443045255.github.io/MyPage") {
+    console.log(location.href);
+    if (location.href == "https://2443045255.github.io/MyPage/") {
+      alert("跳转正确地址")
       location.href = "dist/"
     }
-    console.log(location.host + location.href);
   </script>
 </body>
 
