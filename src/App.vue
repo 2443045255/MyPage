@@ -31,7 +31,7 @@
     <div class="headerChildDiv a default-hoverBg closeheader" @click="headerOpenClose(true)">
       <span>关闭菜单</span>
     </div>
-    <div class="headerChildDiv a default-hoverBg" @click="location.href = '随机号码/'">
+    <div class="headerChildDiv a default-hoverBg" @click="跳转链接()">
       <span>随机号码</span>
     </div>
   </header>
@@ -200,6 +200,9 @@ function 屏幕小于900() {
   }
 }
 
+function 跳转链接(){
+  location.href = '随机号码/'
+}
 </script>
 
 <style scoped>
