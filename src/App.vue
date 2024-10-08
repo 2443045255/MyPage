@@ -18,7 +18,7 @@
         </RouterLink>
       </nav>
     </div>
-    <div class="headerChildDiv schemeSelect a default-hoverBg" @click="schemeSelect()">
+    <div class="headerChildDiv a default-hoverBg schemeSelect" @click="schemeSelect()">
       <div class="schemeSelectTitle">主题选择</div>
       <div class="schemeSelectBody">
         <p>亮</p>
@@ -28,8 +28,11 @@
         <p>暗</p>
       </div>
     </div>
-    <div class="headerChildDiv closeheader a default-hoverBg" @click="headerOpenClose(true)">
+    <div class="headerChildDiv a default-hoverBg closeheader" @click="headerOpenClose(true)">
       <span>关闭菜单</span>
+    </div>
+    <div class="headerChildDiv a default-hoverBg" @click="href = '随机号码/'">
+      <span>随机号码</span>
     </div>
   </header>
 
