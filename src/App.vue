@@ -2,6 +2,7 @@
   <div class="headerBg" v-show="headerBg" @click="headerOpenClose(true)"></div>
   <header @click="更新侧边栏宽度()">
     <h2 class="logo no-a a">Rxaser page</h2>
+    <p class="headerInfo">导航</p>
     <div class="wrapper">
       <nav>
         <RouterLink to="/" replace="">
@@ -18,6 +19,9 @@
         </RouterLink>
       </nav>
     </div>
+
+    <p class="headerInfo">功能</p>
+
     <div class="headerChildDiv a default-hoverBg schemeSelect" @click="schemeSelect()">
       <div class="schemeSelectTitle">主题选择</div>
       <div class="schemeSelectBody">
@@ -29,13 +33,17 @@
       </div>
     </div>
 
+    <div class="headerChildDiv a default-hoverBg closeheader" @click="headerOpenClose(true)">
+      <span>关闭菜单</span>
+    </div>
+
+    <p class="headerInfo">链接</p>
+
     <a href="随机号码/" target="_blank" class="headerChildDiv a default-hoverBg">
       <span>随机号码</span>
     </a>
 
-    <div class="headerChildDiv a default-hoverBg closeheader" @click="headerOpenClose(true)">
-      <span>关闭菜单</span>
-    </div>
+    
 
   </header>
 
@@ -202,10 +210,6 @@ function 屏幕小于900() {
     header900 = false
   }
 }
-
-function 跳转链接() {
-  location.href = '随机号码/'
-}
 </script>
 
 <style scoped>
@@ -235,6 +239,14 @@ header {
 
 header>a {
   display: block;
+}
+
+.headerInfo{
+  text-align: left;
+  font-size: 14px;
+  margin: 3px 0;
+  color: var(--infoColor);
+  user-select: none;
 }
 
 .logo {

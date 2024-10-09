@@ -6,12 +6,14 @@
 :root {
   --Color_light: black;
   --Color_dark: white;
+  --ColorInfo_light: rgba(0, 0, 0, 0.5);
+  --ColorInfo_dark: rgba(255, 255, 255, 0.5);
   --bgColor_light: white;
   --bgColor_dark: rgb(27, 27, 27);
-  --defaultBoxShadowColor_light:rgba(0, 0, 0, 0.3);
-  --defaultBoxShadowColor_dark:rgba(255, 255, 255, 0.3);
-  --defaultBtnTanColor_light:rgba(0, 0, 0, 0.5);
-  --defaultBtnTanColor_dark:rgba(255, 255, 255, 0.5);
+  --defaultBoxShadowColor_light: rgba(0, 0, 0, 0.3);
+  --defaultBoxShadowColor_dark: rgba(255, 255, 255, 0.3);
+  --defaultBtnTanColor_light: rgba(0, 0, 0, 0.5);
+  --defaultBtnTanColor_dark: rgba(255, 255, 255, 0.5);
   --navA_txtColor_light: rgb(30, 30, 30);
   --navA_txtColor_dark: rgb(225, 225, 225);
   --navA_borderColor_light: #787878;
@@ -27,6 +29,7 @@
 @media (prefers-color-scheme: light) {
   :root {
     --defaultColor: var(--Color_light);
+    --infoColor: var(--ColorInfo_light);
     --defaultColor-1: var(--Color_dark);
     --defaultBgColor: var(--bgColor_light);
     --defaultBoxShadowColor: var(--defaultBoxShadowColor_light);
@@ -43,6 +46,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --defaultColor: var(--Color_dark);
+    --infoColor: var(--ColorInfo_dark);
     --defaultColor-1: var(--Color_light);
     --defaultBgColor: var(--bgColor_dark);
     --defaultBoxShadowColor: var(--defaultBoxShadowColor_dark);
@@ -58,6 +62,7 @@
 
 .light {
   --defaultColor: var(--Color_light);
+  --infoColor: var(--ColorInfo_light);
   --defaultColor-1: var(--Color_dark);
   --defaultBgColor: var(--bgColor_light);
   --defaultBoxShadowColor: var(--defaultBoxShadowColor_light);
@@ -72,6 +77,7 @@
 
 .dark {
   --defaultColor: var(--Color_dark);
+  --infoColor: var(--ColorInfo_dark);
   --defaultColor-1: var(--Color_light);
   --defaultBgColor: var(--bgColor_dark);
   --defaultBoxShadowColor: var(--defaultBoxShadowColor_dark);
