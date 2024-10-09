@@ -3,6 +3,11 @@
   src: url(./fonts/HarmonyOS_Sans_SC_Regular.ttf);
 }
 
+@font-face {
+  font-family: "MonaspaceRadon_Regular";
+  src: url(./fonts/MonaspaceRadon-Regular.otf);
+}
+
 :root {
   --Color_light: black;
   --Color_dark: white;

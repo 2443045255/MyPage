@@ -249,9 +249,17 @@ header>a {
   user-select: none;
 }
 
+.headerInfo::after{
+  content: ":";
+  font-size: 1.2rem;
+  line-height: 0;
+  padding: 0 1px;
+}
+
 .logo {
   font-size: 25px;
   font-weight: bold;
+  font-family: "MonaspaceRadon_Regular";
   border-bottom: 1px solid
 }
 
