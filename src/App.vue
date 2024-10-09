@@ -28,12 +28,15 @@
         <p>暗</p>
       </div>
     </div>
+
+    <a href="随机号码/" target="_blank" class="headerChildDiv a default-hoverBg">
+      <span>随机号码</span>
+    </a>
+
     <div class="headerChildDiv a default-hoverBg closeheader" @click="headerOpenClose(true)">
       <span>关闭菜单</span>
     </div>
-    <div class="headerChildDiv a default-hoverBg" @click="跳转链接()">
-      <span>随机号码</span>
-    </div>
+
   </header>
 
   <section :style="{ marginLeft: header_width + px }">
@@ -200,7 +203,7 @@ function 屏幕小于900() {
   }
 }
 
-function 跳转链接(){
+function 跳转链接() {
   location.href = '随机号码/'
 }
 </script>
@@ -228,6 +231,10 @@ header {
   width: 100vw;
   height: 100vh;
   background-color: rgba(131, 131, 131, 0.5);
+}
+
+header>a {
+  display: block;
 }
 
 .logo {
