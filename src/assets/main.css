@@ -17,6 +17,18 @@ div{
   border: none;
 }
 
+textarea {
+  resize: none;
+  outline: none;
+  border: 1px solid;
+  font-family: "HarmonyOS_Sans_SC_Regular";
+}
+
+button{
+  padding: .1rem .2rem;
+  border: 1px solid;
+}
+
 main {
   min-height: 100vh;
   padding: 1rem;
