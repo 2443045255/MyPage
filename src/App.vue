@@ -244,8 +244,8 @@ header>a {
 .headerInfo{
   text-align: left;
   font-size: 14px;
-  margin: 3px 0;
   color: var(--infoColor);
+  margin: 3px 0;
   user-select: none;
 }
 

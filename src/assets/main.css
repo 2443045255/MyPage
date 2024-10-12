@@ -13,10 +13,15 @@ a {
   border-radius: 3px;
 }
 
+div{
+  border: none;
+}
+
 main {
   min-height: 100vh;
   padding: 1rem;
 }
+
 
 @media (hover: hover) {
   a:hover {
@@ -47,3 +52,4 @@ main {
     width: 100%;
   }
 }
+

@@ -129,8 +129,9 @@ body {
   user-select: none;
 }
 
-.default-hoverBg {
-  transition: .2s;
+.default-hoverBg,
+.color1-hoverBg {
+  transition: background .2s;
 }
 
 .default-hoverBg:hover {
@@ -141,10 +142,22 @@ body {
   background: var(--hover1Active_bgColor);
 }
 
+.color1-hoverBg:hover{
+  background: rgba(0, 194, 129, 0.2);
+}
+
+.color1-hoverBg:active{
+  background: rgba(0, 194, 129, 0.5);
+}
+
 .headerClose {
   transform: translateX(-100%);
 }
 
 .headerOpen {
   transform: translateX(0%) !important;
+}
+
+.infoColor{
+  color: var(--infoColor);
 }
