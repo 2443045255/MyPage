@@ -42,8 +42,10 @@
     <a href="随机号码/" target="_blank" class="headerChildDiv a default-hoverBg">
       <span>随机号码</span>
     </a>
+    <div class="versionInfo" style="font-size: 12px;text-align: left;">
+      <p>版本:<span>1.0.0</span></p>
+    </div>
 
-    
 
   </header>
 
@@ -241,7 +243,7 @@ header>a {
   display: block;
 }
 
-.headerInfo{
+.headerInfo {
   text-align: left;
   font-size: 14px;
   color: var(--infoColor);
@@ -249,7 +251,7 @@ header>a {
   user-select: none;
 }
 
-.headerInfo::after{
+.headerInfo::after {
   content: ":";
   font-size: 1.2rem;
   line-height: 0;
