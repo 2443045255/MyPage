@@ -4,8 +4,8 @@
             <div class="chatRoomTitle">公共聊天室1</div>
             <div class="chatBody">
                 <div class="chatInputGroup">
-                    <textarea name="" id=""></textarea>
-                    <button>发送</button>
+                    <textarea name="" id="chatInputTextarea" rows="1"></textarea>
+                    <button class="btnColor1">发送</button>
                 </div>
             </div>
         </div>
@@ -23,6 +23,18 @@
         </div>
     </main>
 </template>
+<script setup>
+import { onMounted } from 'vue';
+var px = "px"
+onMounted(function () {
+    var chatInputTextarea = document.getElementById("chatInputTextarea")
+    chatInputTextarea.addEventListener("input", function () {
+        this.style.height = "0px"
+        this.offsetHeight
+        this.style.height = this.scrollHeight + 2 + px
+    })
+})
+</script>
 <style scoped>
 main {
     padding: 0;
@@ -40,11 +52,32 @@ main {
     position: relative;
 }
 
-.chatInputGroup{
+.chatInputGroup {
     width: 100%;
     position: absolute;
     bottom: 0;
     left: 0;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px -10px 5px rgba(80, 80, 80, 0.1);
+}
+
+.chatInputGroup>textarea,
+.chatInputGroup>button {
+    border-radius: 4px;
+}
+
+.chatInputGroup>textarea {
+    width: 89%;
+    margin-right: 1%;
+    padding: 2px;
+    line-height: 1.1rem;
+    height: auto;
+}
+
+.chatInputGroup>button {
+    flex: 1;
 }
 
 .chatRoomTitle {

@@ -99,7 +99,9 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  font-weight: normal;
+  border-collapse: collapse;
+  border-spacing: 0;
+  list-style: none;
   margin: 0;
   padding: 0;
 }
@@ -142,11 +144,11 @@ body {
   background: var(--hover1Active_bgColor);
 }
 
-.color1-hoverBg:hover{
+.color1-hoverBg:hover {
   background: rgba(0, 194, 129, 0.2);
 }
 
-.color1-hoverBg:active{
+.color1-hoverBg:active {
   background: rgba(0, 194, 129, 0.5);
 }
 
@@ -158,6 +160,18 @@ body {
   transform: translateX(0%) !important;
 }
 
-.infoColor{
+.infoColor {
   color: var(--infoColor);
+}
+
+.btnColor1{
+  background: rgba(0, 213, 255);
+}
+
+.btnColor1:hover{
+  background: rgba(0, 213, 255, 0.5);
+}
+
+.btnColor1:active{
+  background: rgba(0, 213, 255);
 }
