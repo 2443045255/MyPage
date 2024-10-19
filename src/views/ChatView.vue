@@ -29,7 +29,7 @@ main {
     display: flex;
 }
 
-.chatRoom {
+.chatRoom { 
     flex: 1;
     display: flex;
     flex-direction: column;
