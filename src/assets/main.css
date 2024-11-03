@@ -9,36 +9,47 @@ a {
   text-decoration: none;
   color: var(--defaultColor);
   transition: 0.2s;
-  padding: 3px 6px;
+  padding: .2em .6em;
   border-radius: 3px;
 }
 
-div{
+
+a:hover {
+  background-color: hsla(160, 100%, 37%, 0.2);
+}
+
+div {
   border: none;
 }
 
 textarea {
   resize: none;
   outline: none;
-  border: 1px solid;
-  font-family: "HarmonyOS_Sans_SC_Regular";
+  border: none;
 }
 
-button{
-  padding: .1rem .2rem;
-  border: 1px solid;
+button,
+.likeBtn1 {
+  padding: .2em .6em;
+  border-radius: 4px;
+  color: var(--defaultColor);
+  background-color: var(--btn1_Color);
+  border: 1px solid var(--btn1_BorderColor);
+}
+
+button:hover,
+.likeBtn1:hover {
+  background-color: var(--btn1_HoverColor);
+}
+
+button:active,
+.likeBtn1:active {
+  background-color: var(--btn1_ActiveColor);
 }
 
 main {
   min-height: 100vh;
   padding: 1rem;
-}
-
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
 }
 
 .navClickAnimation {
@@ -64,4 +75,3 @@ main {
     width: 100%;
   }
 }
-

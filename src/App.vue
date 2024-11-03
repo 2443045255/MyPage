@@ -5,16 +5,16 @@
     <p class="headerInfo">导航</p>
     <div class="wrapper">
       <nav>
-        <RouterLink to="/" replace="">
+        <RouterLink to="/" replace>
           <span class="routerLickTxt">主页</span>
         </RouterLink>
-        <RouterLink to="/public" replace="">
+        <RouterLink to="/public" replace>
           <span class="routerLickTxt">发布</span>
         </RouterLink>
-        <RouterLink to="/chat" replace="">
+        <RouterLink to="/chat" replace>
           <span class="routerLickTxt">聊天</span>
         </RouterLink>
-        <RouterLink to="/about" replace="">
+        <RouterLink to="/about" replace>
           <span class="routerLickTxt">关于</span>
         </RouterLink>
       </nav>
@@ -249,6 +249,7 @@ header>a {
   color: var(--infoColor);
   margin: 3px 0;
   user-select: none;
+  -webkit-user-select: none;
 }
 
 .headerInfo::after {
@@ -289,6 +290,7 @@ nav a {
   align-items: center;
   justify-content: center;
   user-select: none;
+  -webkit-user-select: none;
 }
 
 
@@ -383,12 +385,12 @@ section {
   transition: 0.3s ease-in-out;
 }
 
-/* .RouterView-enter-from {
-  transform: translateX(10%);
-} */
+.RouterView-enter-from {
+  opacity: .1;
+}
 
 .RouterView-leave-to {
-  opacity: 0;
+  opacity: .1;
   /* transform: translateX(-10%); */
 }
 

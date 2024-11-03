@@ -5,10 +5,8 @@
 <template>
   <main>
     <h1>这是主页</h1>
-    <div class="testdiv">
-      <input type="text">
-      <h1>你好世界</h1>
-    </div>
+    <h3>暂无内容</h3>
+    <RouterLink class="likeBtn1" to="/chat" replace>进入聊天室</RouterLink>
   </main>
 </template>
 

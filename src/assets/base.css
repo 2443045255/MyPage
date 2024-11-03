@@ -29,6 +29,15 @@
   --hover1_bgColor_dark: rgba(255, 255, 255, 0.15);
   --hover1Active_bgColor_light: rgba(20, 20, 20, 0.25);
   --hover1Active_bgColor_dark: rgba(255, 255, 255, 0.25);
+  --btn1_Color_light: rgb(255, 255, 255);
+  --btn1_BorderColor_light: rgb(165, 165, 165);
+  --btn1_HoverColor_light: rgb(220, 220, 220);
+  --btn1_ActiveColor_light: rgba(200, 200, 200);
+
+  --btn1_Color_dark: rgb(0, 0, 0);
+  --btn1_BorderColor_dark: rgb(75, 75, 75);
+  --btn1_HoverColor_dark: rgb(40, 40, 40);
+  --btn1_ActiveColor_dark: rgb(70, 70, 70);
 }
 
 @media (prefers-color-scheme: light) {
@@ -45,6 +54,10 @@
     --navA_activeColor: var(--navA_activeColor_light);
     --hover1_bgColor: var(--hover1_bgColor_light);
     --hover1Active_bgColor: var(--hover1Active_bgColor_light);
+    --btn1_Color: var(--btn1_Color_light);
+    --btn1_BorderColor: var(--btn1_BorderColor_light);
+    --btn1_HoverColor: var(--btn1_HoverColor_light);
+    --btn1_ActiveColor: var(--btn1_ActiveColor_light);
   }
 }
 
@@ -62,6 +75,10 @@
     --navA_activeColor: var(--navA_activeColor_dark);
     --hover1_bgColor: var(--hover1_bgColor_dark);
     --hover1Active_bgColor: var(--hover1Active_bgColor_dark);
+    --btn1_Color: var(--btn1_Color_dark);
+    --btn1_BorderColor: var(--btn1_BorderColor_dark);
+    --btn1_HoverColor: var(--btn1_HoverColor_dark);
+    --btn1_ActiveColor: var(--btn1_ActiveColor_dark);
   }
 }
 
@@ -78,6 +95,10 @@
   --navA_activeColor: var(--navA_activeColor_light);
   --hover1_bgColor: var(--hover1_bgColor_light);
   --hover1Active_bgColor: var(--hover1Active_bgColor_light);
+  --btn1_Color: var(--btn1_Color_light);
+  --btn1_BorderColor: var(--btn1_BorderColor_light);
+  --btn1_HoverColor: var(--btn1_HoverColor_light);
+  --btn1_ActiveColor: var(--btn1_ActiveColor_light);
 }
 
 .dark {
@@ -93,6 +114,10 @@
   --navA_activeColor: var(--navA_activeColor_dark);
   --hover1_bgColor: var(--hover1_bgColor_dark);
   --hover1Active_bgColor: var(--hover1Active_bgColor_dark);
+  --btn1_Color: var(--btn1_Color_dark);
+  --btn1_BorderColor: var(--btn1_BorderColor_dark);
+  --btn1_HoverColor: var(--btn1_HoverColor_dark);
+  --btn1_ActiveColor: var(--btn1_ActiveColor_dark);
 }
 
 *,
@@ -104,12 +129,12 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  font-family: "HarmonyOS_Sans_SC_Regular" !important;
 }
 
 body {
   min-height: 100vh;
   line-height: 1.6;
-  font-family: "HarmonyOS_Sans_SC_Regular";
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -129,6 +154,7 @@ body {
 .a {
   cursor: pointer;
   user-select: none;
+  -webkit-user-select: none;
 }
 
 .default-hoverBg,
@@ -164,14 +190,14 @@ body {
   color: var(--infoColor);
 }
 
-.btnColor1{
+.btnColor1 {
   background: rgba(0, 213, 255);
 }
 
-.btnColor1:hover{
+.btnColor1:hover {
   background: rgba(0, 213, 255, 0.5);
 }
 
-.btnColor1:active{
+.btnColor1:active {
   background: rgba(0, 213, 255);
 }

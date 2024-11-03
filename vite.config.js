@@ -7,7 +7,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   // base: '/MyPage/dist/',
   preview: {
-    port: 80
+    port: 80.
   },
   plugins: [
     vue(),
