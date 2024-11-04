@@ -26,6 +26,7 @@ textarea {
   resize: none;
   outline: none;
   border: none;
+  line-height: initial !important;
 }
 
 button,
