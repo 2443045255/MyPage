@@ -43,7 +43,7 @@ onMounted(function () {
     chatInputTextarea.addEventListener("input", function () {
         this.style.height = "0px"
         this.offsetHeight
-        this.style.height = this.scrollHeight + 2 + px
+        this.style.height = this.scrollHeight + px
     })
 
     var SelectRoomBtn = document.getElementById("SelectRoomBtn")
@@ -133,7 +133,7 @@ main {
 
 .chatInputTextareaDiv>textarea {
     width: 100%;
-    line-height: 1.2rem;
+    height: 21px;
     font-size: 16px;
 }
 
