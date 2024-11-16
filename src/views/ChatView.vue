@@ -78,8 +78,7 @@ onMounted(function () {
 
 const Msg1 = () => {
     RxaserMessage({
-        message: "你好世界",
-        type: '警告'
+        message: "你好世界"
     })
 }
 
