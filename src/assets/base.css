@@ -1,11 +1,11 @@
 @font-face {
-  font-family: "HarmonyOS_Sans_SC_Regular";
-  src: url(./fonts/HarmonyOS_Sans_SC_Regular.ttf);
+  font-family: "assets/fonts/HarmonyOS_Sans_SC_Regular";
+  src: url(fonts/HarmonyOS_Sans_SC_Regular.ttf);
 }
 
 @font-face {
-  font-family: "MonaspaceRadon_Regular";
-  src: url(./fonts/MonaspaceRadon-Regular.otf);
+  font-family: "assets/fonts/MonaspaceRadon_Regular";
+  src: url(fonts/MonaspaceRadon-Regular.otf);
 }
 
 :root {
@@ -143,12 +143,21 @@ body {
   background: var(--defaultBgColor);
 }
 
+.no-show {
+  display: none;
+}
+
 .no-a {
   cursor: default;
 }
 
 .pl_25px {
   padding-left: 25px;
+}
+
+.pi_05em {
+  padding-left: .5em;
+  padding-right: .5em;
 }
 
 .a {

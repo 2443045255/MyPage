@@ -22,13 +22,11 @@
 
     <p class="headerInfo">功能</p>
 
-    <div class="headerChildDiv a default-hoverBg schemeSelect" @click="schemeSelect()">
+    <div class="headerChildDiv a default-hoverBg schemeSelect" @click="schemeSelect(true)">
       <div class="schemeSelectTitle">主题选择</div>
       <div class="schemeSelectBody">
         <p>亮</p>
-        <div class="schemeSelectBodyRange" style="--width: 36px;">
-          <span class="schemeSelectBodyRangeBody"></span>
-        </div>
+        <ToggleBtn :status="schemeSelect_val" />
         <p>暗</p>
       </div>
     </div>
@@ -42,11 +40,9 @@
     <a href="随机号码/" target="_blank" class="headerChildDiv a default-hoverBg">
       <span>随机号码</span>
     </a>
-    <div class="versionInfo" style="font-size: 12px;text-align: left;">
+    <div class="versionInfo" style="font-size: 12px; text-align: left">
       <p>版本:<span>1.0.0</span></p>
     </div>
-
-
   </header>
 
   <section :style="{ marginLeft: header_width + px }">
@@ -55,7 +51,6 @@
         <span>三</span>
       </div>
     </div>
-
 
     <!-- <section> -->
     <!-- <RouterView /> -->
@@ -71,145 +66,144 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import ToggleBtn from "@/vueModule/ToggleBtn.vue";
 
+import { RouterLink, RouterView } from "vue-router";
+import { ref, onMounted } from "vue";
 
-const header_width = ref("0px")
-var px = 'px'
-var headerEM
-var headerIsClose = false
-var sectionEM
+const header_width = ref("0px");
+var px = "px";
+var headerEM;
+var headerIsClose = false;
+var sectionEM;
 onMounted(() => {
-  headerEM = document.querySelector("header")
-  sectionEM = document.querySelector("section")
-  更新侧边栏宽度()
-  sectionEM.addEventListener('scroll', () => {
-  })
+  headerEM = document.querySelector("header");
+  sectionEM = document.querySelector("section");
+  更新侧边栏宽度();
+  sectionEM.addEventListener("scroll", () => { });
   window.addEventListener("resize", () => {
-    更新侧边栏宽度()
-    屏幕小于900()
-  })
-  屏幕小于900()
-  RouterLinkClick()
-  schemelister()
-})
+    更新侧边栏宽度();
+    屏幕小于900();
+  });
+  屏幕小于900();
+  RouterLinkClick();
+  schemelister();
+});
 
 function 更新侧边栏宽度() {
-  if (document.documentElement.scrollWidth <= 900) { return }
+  if (document.documentElement.scrollWidth <= 900) {
+    return;
+  }
   if (headerIsClose) {
-    header_width.value = 0
+    header_width.value = 0;
   } else if (header_width.value != headerEM.scrollWidth) {
-    header_width.value = headerEM.scrollWidth
+    header_width.value = headerEM.scrollWidth;
   }
 }
 
 function RouterLink动画完成() {
-  var navClickAnimation_all = document.querySelectorAll(".navClickAnimation")
-  navClickAnimation_all.forEach(e => {
+  var navClickAnimation_all = document.querySelectorAll(".navClickAnimation");
+  navClickAnimation_all.forEach((e) => {
     e.addEventListener("animationend", function () {
-      e.remove()
+      e.remove();
     });
-  })
+  });
 }
 
 function RouterLinkClick() {
-  var navA_all = document.querySelectorAll("nav a")
+  var navA_all = document.querySelectorAll("nav a");
   navA_all.forEach((e, num) => {
-    let 防抖1 = null
+    let 防抖1 = null;
     e.addEventListener("mousedown", () => {
-      var navClickAnimation = document.createElement("span")
-      navClickAnimation.className = "navClickAnimation"
-      navA_all[num].appendChild(navClickAnimation)
-      RouterLink动画完成()
-      clearTimeout(防抖1)
+      var navClickAnimation = document.createElement("span");
+      navClickAnimation.className = "navClickAnimation";
+      navA_all[num].appendChild(navClickAnimation);
+      RouterLink动画完成();
+      clearTimeout(防抖1);
       防抖1 = setTimeout(() => {
-        headerOpenClose()
+        headerOpenClose();
       }, 300);
-    })
-  })
+    });
+  });
 }
 
-import { useCounterStore } from '@/stores/counter'
-const store = useCounterStore()
+import { useCounterStore } from "@/stores/counter";
+const useCounterStore_s = useCounterStore();
 
-function schemeSelect(value = 'none') {
-  var schemeSelect = store.schemeSelectClick()
-  var schemeSelectBodyRange = document.querySelector(".schemeSelectBodyRangeBody")
+const schemeSelect_val = ref(true);
+function schemeSelect(value = false) {
+  var schemeSelect = useCounterStore_s.schemeSelectClick();
   function schemeToLight() {
-    schemeSelectBodyRange.style.setProperty('--schemeSelect', '0%');
-    document.documentElement.className = 'light'
+    document.documentElement.className = "light";
   }
   function schemeToDark() {
-    schemeSelectBodyRange.style.setProperty('--schemeSelect', '50%');
-    document.documentElement.className = 'dark'
+    document.documentElement.className = "dark";
   }
-  if (value == 'light') {
-    schemeToLight()
-    return
-
-  } else if (value == 'dark') {
-    schemeToDark()
-    return
+  if (value) {
+    if (schemeSelect_val.value) {
+      schemeToDark();
+    } else {
+      schemeToLight();
+    }
+  } else if (schemeSelect == "light") {
+    schemeToLight();
+  } else if (schemeSelect == "dark") {
+    schemeToDark();
   }
-
-  if (schemeSelect == 'light') {
-    schemeToLight()
-  } else if (schemeSelect == 'dark') {
-    schemeToDark()
-  }
-
+  schemeSelect_val.value = !schemeSelect_val.value;
 }
 
 function schemelister() {
-  var mqList = window.matchMedia('(prefers-color-scheme: dark)');
-  mqList.matches ? schemeSelect("dark") : null
-  mqList.addEventListener('change', (event) => {
+  var mqList = window.matchMedia("(prefers-color-scheme: dark)");
+  mqList.matches ? schemeSelect("dark") : null;
+  mqList.addEventListener("change", (event) => {
     if (event.matches) {
-      schemeSelect("dark")
+      schemeSelect(true);
     } else {
-      schemeSelect("light")
+      schemeSelect(true);
     }
   });
 }
 
 function headerOpenClose(value) {
   if (header900) {
-    headerToOpen()
+    headerToOpen();
   } else if (value) {
-    headerToClose()
+    headerToClose();
   }
 }
 
 function headerToClose() {
-  headerEM.classList.toggle("headerClose")
-  headerIsClose = !headerIsClose
-  更新侧边栏宽度()
+  headerEM.classList.toggle("headerClose");
+  headerIsClose = !headerIsClose;
+  更新侧边栏宽度();
 }
 
-const headerBg = ref(false)
+const headerBg = ref(false);
 
 function headerToOpen(value = true) {
-  if (!value) {//大于900
-    headerEM.classList.remove("headerOpen")
-    headerIsClose = false
-    headerBg.value = false
-  } else {//小于900
-    headerEM.classList.toggle("headerOpen")
-    headerIsClose = !headerIsClose
-    headerBg.value = !headerBg.value
+  if (!value) {
+    //大于900
+    headerEM.classList.remove("headerOpen");
+    headerIsClose = false;
+    headerBg.value = false;
+  } else {
+    //小于900
+    headerEM.classList.toggle("headerOpen");
+    headerIsClose = !headerIsClose;
+    headerBg.value = !headerBg.value;
   }
 }
 
-let header900 = false
+let header900 = false;
 function 屏幕小于900() {
   if (document.documentElement.scrollWidth <= 900 && !header900) {
-    header_width.value = 0
-    header900 = true
-    headerIsClose ? headerToClose() : null
+    header_width.value = 0;
+    header900 = true;
+    headerIsClose ? headerToClose() : null;
   } else if (document.documentElement.scrollWidth > 900 && header900) {
-    headerToOpen(false)
-    header900 = false
+    headerToOpen(false);
+    header900 = false;
   }
 }
 </script>
@@ -226,7 +220,7 @@ header {
   border: 0;
   border-right: 1px rgb(182, 182, 182) solid;
   background-color: var(--defaultBgColor);
-  transition: transform .3s;
+  transition: transform 0.3s;
 }
 
 .headerBg {
@@ -236,7 +230,8 @@ header {
   right: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(131, 131, 131, 0.5);
+  background-color: rgba(127, 127, 127, 0.2);
+  backdrop-filter: blur(2px);
 }
 
 header>a {
@@ -263,9 +258,8 @@ header>a {
   font-size: 25px;
   font-weight: bold;
   font-family: "MonaspaceRadon_Regular";
-  border-bottom: 1px solid
+  border-bottom: 1px solid;
 }
-
 
 nav {
   padding: 0 10px;
@@ -281,7 +275,7 @@ nav a.router-link-exact-active:hover {
 
 nav a {
   color: var(--navA_txtColor);
-  padding: .3rem 0;
+  padding: 0.3rem 0;
   border-radius: 6px;
   margin: 5px 0;
   position: relative;
@@ -292,7 +286,6 @@ nav a {
   user-select: none;
   -webkit-user-select: none;
 }
-
 
 nav a:hover {
   background-color: var(--navA_hoverColor);
@@ -323,27 +316,36 @@ nav a:hover {
   align-items: center;
 }
 
-.schemeSelectBodyRange {
+.ToggleBtn {
   margin: 0px 10px;
   border: 1px solid;
   border-radius: 25px;
   width: var(--width);
   height: calc(var(--width) / 2);
+  padding: 0 3px;
   display: flex;
   align-items: center;
 }
 
-.schemeSelectBodyRangeBody {
-  transition: left .3s;
+.ToggleBtnCircle {
+  transition: left 0.3s, transform 0.3s;
   height: calc(calc(var(--width) / 2) - 6px);
   width: calc(calc(var(--width) / 2) - 6px);
   background-color: rgb(48, 150, 48);
   border-radius: 50%;
   display: block;
-  --schemeSelect: 0%;
-  margin: 3px;
-  left: var(--schemeSelect);
   position: relative;
+}
+
+.ToggleBtnCircle_left {
+  left: 0;
+  right: auto;
+}
+
+.ToggleBtnCircle_right {
+  left: 100%;
+  transform: translateX(-100%);
+  right: auto;
 }
 
 .closeheader * {
@@ -353,7 +355,7 @@ nav a:hover {
 section {
   flex: 1;
   overflow-x: hidden;
-  transition: .3s;
+  transition: 0.3s;
   position: relative;
 }
 
@@ -386,15 +388,15 @@ section {
 }
 
 .RouterView-enter-from {
-  opacity: .1;
+  opacity: 0.1;
 }
 
 .RouterView-leave-to {
-  opacity: .1;
+  opacity: 0.1;
   /* transform: translateX(-10%); */
 }
 
-@media (max-width:900px) {
+@media (max-width: 900px) {
   header {
     transform: translateX(-100%);
     border: 0;
