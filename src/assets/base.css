@@ -11,24 +11,30 @@
 :root {
   --Color_light: black;
   --Color_dark: white;
+
   --ColorInfo_light: rgba(0, 0, 0, 0.5);
   --ColorInfo_dark: rgba(255, 255, 255, 0.5);
+
   --bgColor_light: white;
   --bgColor_dark: rgb(27, 27, 27);
+
   --defaultBoxShadowColor_light: rgba(0, 0, 0, 0.3);
   --defaultBoxShadowColor_dark: rgba(255, 255, 255, 0.3);
   --defaultBtnTanColor_light: rgba(0, 0, 0, 0.5);
   --defaultBtnTanColor_dark: rgba(255, 255, 255, 0.5);
+
   --navA_txtColor_light: rgb(30, 30, 30);
   --navA_txtColor_dark: rgb(225, 225, 225);
   --navA_borderColor_light: #787878;
   --navA_borderColor_dark: #dddddd;
   --navA_activeColor_light: rgba(20, 20, 20, 0.25);
   --navA_activeColor_dark: rgba(255, 255, 255, 0.25);
+
   --hover1_bgColor_light: rgba(20, 20, 20, 0.15);
   --hover1_bgColor_dark: rgba(255, 255, 255, 0.15);
   --hover1Active_bgColor_light: rgba(20, 20, 20, 0.25);
   --hover1Active_bgColor_dark: rgba(255, 255, 255, 0.25);
+
   --btn1_Color_light: rgb(255, 255, 255);
   --btn1_BorderColor_light: rgb(165, 165, 165);
   --btn1_HoverColor_light: rgb(220, 220, 220);
@@ -38,49 +44,20 @@
   --btn1_BorderColor_dark: rgb(75, 75, 75);
   --btn1_HoverColor_dark: rgb(40, 40, 40);
   --btn1_ActiveColor_dark: rgb(70, 70, 70);
+
+  --caretColor-light:black;
+  --caretColor-dark:white;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
-    --defaultColor: var(--Color_light);
-    --infoColor: var(--ColorInfo_light);
-    --defaultColor-1: var(--Color_dark);
-    --defaultBgColor: var(--bgColor_light);
-    --defaultBoxShadowColor: var(--defaultBoxShadowColor_light);
-    --defaultBtnTanColor: var(--defaultBtnTanColor_light);
-    --navA_txtColor: var(--navA_txtColor_light);
-    --navA_borderColor: var(--navA_borderColor_light);
-    --navA_hoverColor: var(--hover1_bgColor_light);
-    --navA_activeColor: var(--navA_activeColor_light);
-    --hover1_bgColor: var(--hover1_bgColor_light);
-    --hover1Active_bgColor: var(--hover1Active_bgColor_light);
-    --btn1_Color: var(--btn1_Color_light);
-    --btn1_BorderColor: var(--btn1_BorderColor_light);
-    --btn1_HoverColor: var(--btn1_HoverColor_light);
-    --btn1_ActiveColor: var(--btn1_ActiveColor_light);
   }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --defaultColor: var(--Color_dark);
-    --infoColor: var(--ColorInfo_dark);
-    --defaultColor-1: var(--Color_light);
-    --defaultBgColor: var(--bgColor_dark);
-    --defaultBoxShadowColor: var(--defaultBoxShadowColor_dark);
-    --defaultBtnTanColor: var(--defaultBtnTanColor_dark);
-    --navA_txtColor: var(--navA_txtColor_dark);
-    --navA_borderColor: var(--navA_borderColor_dark);
-    --navA_hoverColor: var(--hover1_bgColor_dark);
-    --navA_activeColor: var(--navA_activeColor_dark);
-    --hover1_bgColor: var(--hover1_bgColor_dark);
-    --hover1Active_bgColor: var(--hover1Active_bgColor_dark);
-    --btn1_Color: var(--btn1_Color_dark);
-    --btn1_BorderColor: var(--btn1_BorderColor_dark);
-    --btn1_HoverColor: var(--btn1_HoverColor_dark);
-    --btn1_ActiveColor: var(--btn1_ActiveColor_dark);
   }
-}
+} */
 
 .light {
   --defaultColor: var(--Color_light);
@@ -99,6 +76,7 @@
   --btn1_BorderColor: var(--btn1_BorderColor_light);
   --btn1_HoverColor: var(--btn1_HoverColor_light);
   --btn1_ActiveColor: var(--btn1_ActiveColor_light);
+  --caretColor:var(--caretColor-light);
 }
 
 .dark {
@@ -118,95 +96,5 @@
   --btn1_BorderColor: var(--btn1_BorderColor_dark);
   --btn1_HoverColor: var(--btn1_HoverColor_dark);
   --btn1_ActiveColor: var(--btn1_ActiveColor_dark);
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  border-collapse: collapse;
-  border-spacing: 0;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-family: "HarmonyOS_Sans_SC_Regular" !important;
-}
-
-body {
-  min-height: 100vh;
-  line-height: 1.6;
-  font-size: 15px;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: var(--defaultColor);
-  background: var(--defaultBgColor);
-}
-
-.no-show {
-  display: none;
-}
-
-.no-a {
-  cursor: default;
-}
-
-.pl_25px {
-  padding-left: 25px;
-}
-
-.pi_05em {
-  padding-left: .5em;
-  padding-right: .5em;
-}
-
-.a {
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.default-hoverBg,
-.color1-hoverBg {
-  transition: background .2s;
-}
-
-.default-hoverBg:hover {
-  background: var(--hover1_bgColor);
-}
-
-.default-hoverBg:active {
-  background: var(--hover1Active_bgColor);
-}
-
-.color1-hoverBg:hover {
-  background: rgba(0, 194, 129, 0.2);
-}
-
-.color1-hoverBg:active {
-  background: rgba(0, 194, 129, 0.5);
-}
-
-.headerClose {
-  transform: translateX(-100%);
-}
-
-.headerOpen {
-  transform: translateX(0%) !important;
-}
-
-.infoColor {
-  color: var(--infoColor);
-}
-
-.btnColor1 {
-  background: rgba(0, 213, 255);
-}
-
-.btnColor1:hover {
-  background: rgba(0, 213, 255, 0.5);
-}
-
-.btnColor1:active {
-  background: rgba(0, 213, 255);
+  --caretColor:var(--caretColor-dark);
 }

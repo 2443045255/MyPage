@@ -91,7 +91,7 @@ onMounted(function () {
 
 const Msg1 = () => {
   RxaserMessage({
-    message: "你好世界"
+    message: "开发中，敬请期待"
   })
 }
 

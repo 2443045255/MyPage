@@ -1,12 +1,11 @@
-import { createRouter, /* createWebHistory, */ createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import ChatView from '../views/ChatView.vue'
 import PublicView from '../views/PublicView.vue'
 
 const router = createRouter({
-  // history: createWebHistory(import.meta.env.BASE_URL),
-  history: createWebHashHistory(),
+  history: createWebHashHistory(),//路由Hash模式
   routes: [
     {
       path: '/',

@@ -37,7 +37,7 @@
 
     <p class="headerInfo">链接</p>
 
-    <a href="随机号码/" target="_blank" class="headerChildDiv a default-hoverBg">
+    <a href="Pages/随机号码/" target="_blank" class="headerChildDiv a default-hoverBg">
       <span>随机号码</span>
     </a>
     <div class="versionInfo" style="font-size: 12px; text-align: left">

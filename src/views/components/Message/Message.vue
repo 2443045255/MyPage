@@ -4,7 +4,7 @@
       <span>{{ type }}</span>
       <span>:</span>
       <span>{{ message }}</span>
-      <span>{{ id }}</span>
+      <!-- <span>{{ id }}</span> -->
     </div>
   </transition>
 </template>

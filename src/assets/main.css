@@ -1,8 +1,31 @@
 @import '/src/assets/base.css';
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border-collapse: collapse;
+  border-spacing: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: "HarmonyOS_Sans_SC_Regular" !important;
+}
+
 #app {
   display: flex;
   height: 100vh;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.6;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--defaultColor);
+  background: var(--defaultBgColor);
 }
 
 a {
@@ -28,15 +51,18 @@ textarea {
   border: none;
   line-height: initial !important;
   background: transparent;
-  caret-color: rgb(255, 0, 0);
+  caret-color: var(--caretColor);
 }
 
 button,
 .likeBtn1 {
-  padding: .2em .6em;
+  display: block;
+  width: fit-content;
+  padding: .4em .8em;
   border-radius: 4px;
+  font-size: 14px;
   color: var(--defaultColor);
-  background-color: var(--btn1_Color);
+  background-color: transparent;
   border: 1px solid var(--btn1_BorderColor);
 }
 
@@ -54,6 +80,7 @@ main {
   min-height: 100vh;
   padding: 1rem;
 }
+
 
 .navClickAnimation {
   display: block;
@@ -77,4 +104,76 @@ main {
     background-color: rgba(221, 221, 221, 0.1);
     width: 100%;
   }
+}
+
+.no-show {
+  display: none;
+}
+
+.no-a {
+  cursor: default;
+}
+
+.pl_25px {
+  padding-left: 25px;
+}
+
+.pi_05em {
+  padding-left: .5em;
+  padding-right: .5em;
+}
+
+.mt_20px{
+  margin-top: 20px;
+}
+
+.a {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.default-hoverBg,
+.color1-hoverBg {
+  transition: background .2s;
+}
+
+.default-hoverBg:hover {
+  background: var(--hover1_bgColor);
+}
+
+.default-hoverBg:active {
+  background: var(--hover1Active_bgColor);
+}
+
+.color1-hoverBg:hover {
+  background: rgba(0, 194, 129, 0.2);
+}
+
+.color1-hoverBg:active {
+  background: rgba(0, 194, 129, 0.5);
+}
+
+.headerClose {
+  transform: translateX(-100%);
+}
+
+.headerOpen {
+  transform: translateX(0%) !important;
+}
+
+.infoColor {
+  color: var(--infoColor);
+}
+
+.btnColor1 {
+  background: rgba(0, 213, 255);
+}
+
+.btnColor1:hover {
+  background: rgba(0, 213, 255, 0.5);
+}
+
+.btnColor1:active {
+  background: rgba(0, 213, 255);
 }
