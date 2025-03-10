@@ -35,7 +35,7 @@ const RxaserMessage = (options) => {
 
   setTimeout(() => {
     instance.close();
-  }, props.duration || 1000);
+  }, props.duration || 2000);
 
   return instance;
 }

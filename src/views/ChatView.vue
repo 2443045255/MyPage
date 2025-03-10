@@ -21,6 +21,10 @@
     <div id="chatSelectBg" class="chatSelectBg no-show"></div>
     <div id="chatSelect" class="chatSelect">
       <div class="chatSelectBody">
+        <div class="chatSelectAddRoom">
+          <p class="a color1-hoverBg">创建房间</p>
+          <p class="a color1-hoverBg">删除房间</p>
+        </div>
         <div class="chatSelectOption a color1-hoverBg chatSelectOptionActive">
           <p>公共聊天室1</p>
           <p class="info infoColor">未读消息</p>
@@ -91,7 +95,9 @@ onMounted(function () {
 
 const Msg1 = () => {
   RxaserMessage({
-    message: "开发中，敬请期待"
+    type: "警告",
+    message: "开发中，敬请期待",
+    duration: 2000
   })
 }
 
@@ -202,6 +208,17 @@ main {
   width: 100%;
   height: 100%;
   border-left: 1px solid;
+}
+
+.chatSelectAddRoom {
+  display: flex;
+}
+
+.chatSelectAddRoom>p {
+  text-align: center;
+  padding: .3rem 0;
+  width: 50%;
+  color: rgb(203, 36, 147);
 }
 
 .chatSelectOption {

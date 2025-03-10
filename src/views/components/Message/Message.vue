@@ -20,7 +20,7 @@ const props = defineProps({
   },
   duration: {
     type: Number,
-    default: 3000
+    default: 2000
   }
 });
 
@@ -41,12 +41,22 @@ onMounted(() => {
   transform: translateX(-50%);
   padding: .4em 1em;
   top: 16px;
-  background-color: rgb(204, 255, 202);
   border-radius: 6px;
   z-index: 100;
   transition: top .4s;
   font-size: 14px;
 }
+
+.提示{
+  color: green;
+  background-color: rgb(204, 255, 202);
+}
+
+.警告{
+  color: red;
+  background-color: rgb(255, 210, 210)
+}
+
 
 .v-enter-active,
 .v-leave-active {
@@ -56,5 +66,9 @@ onMounted(() => {
 .v-enter-from {
   opacity: 0;
   transform: translate(-50%, -100%);
+}
+
+.v-leave-to{
+  opacity: 0;
 }
 </style>

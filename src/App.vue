@@ -257,7 +257,7 @@ header>a {
 .logo {
   font-size: 25px;
   font-weight: bold;
-  font-family: "MonaspaceRadon_Regular";
+  font-family: "MonaspaceRadon_Regular" !important;
   border-bottom: 1px solid;
 }
 
@@ -349,7 +349,7 @@ nav a:hover {
 }
 
 .closeheader * {
-  color: rgba(255, 90, 90, 0.7);
+  color: rgb(255, 0, 0);
 }
 
 section {
