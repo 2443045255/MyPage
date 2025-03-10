@@ -35,11 +35,6 @@
       <span>关闭菜单</span>
     </div>
 
-    <p class="headerInfo">链接</p>
-
-    <a href="Pages/随机号码/" target="_blank" class="headerChildDiv a default-hoverBg">
-      <span>随机号码</span>
-    </a>
     <div class="versionInfo" style="font-size: 12px; text-align: left">
       <p>版本:<span>1.0.0</span></p>
     </div>
