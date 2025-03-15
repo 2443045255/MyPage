@@ -21,9 +21,12 @@
     <div id="chatSelectBg" class="chatSelectBg no-show"></div>
     <div id="chatSelect" class="chatSelect">
       <div class="chatSelectBody">
-        <div class="chatSelectAddRoom">
-          <p class="a color1-hoverBg">创建房间</p>
-          <p class="a color1-hoverBg">删除房间</p>
+        <div class="chatSelectSetting">
+          <div id="chatSelectCloseBtn" class="a color1-hoverBg">
+            <span>X</span>
+          </div>
+          <div class="a color1-hoverBg">创建房间</div>
+          <div class="a color1-hoverBg">删除房间</div>
         </div>
         <div class="chatSelectOption a color1-hoverBg chatSelectOptionActive">
           <p>公共聊天室1</p>
@@ -32,9 +35,6 @@
         <div class="chatSelectOption a color1-hoverBg">
           <p>公共聊天室2</p>
           <p class="info infoColor">未读消息</p>
-        </div>
-        <div id="chatSelectCloseBtn" class="chatSelectOption a color1-hoverBg">
-          <span>关闭</span>
         </div>
       </div>
     </div>
@@ -210,16 +210,31 @@ main {
   border-left: 1px solid;
 }
 
-.chatSelectAddRoom {
-  display: flex;
+.chatSelectSetting {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
 }
 
-.chatSelectAddRoom>p {
-  text-align: center;
+.chatSelectSetting>div {
   padding: .3rem 0;
-  width: 50%;
   color: rgb(203, 36, 147);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+#chatSelectCloseBtn {
+  color: red;
+}
+
+#chatSelectCloseBtn:hover {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+#chatSelectCloseBtn:active{
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
 
 .chatSelectOption {
   padding: .2rem .3rem;
@@ -242,17 +257,6 @@ main {
 
 .chatSelectOptionActive>p:first-child {
   color: rgb(0, 163, 114);
-}
-
-#chatSelectCloseBtn {
-  padding: .5em 0;
-  text-align: center;
-  color: red;
-}
-
-#chatSelectCloseBtn:hover {
-  padding: .5em 0;
-  background-color: rgba(255, 0, 0, 0.2);
 }
 
 .info {
