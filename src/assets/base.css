@@ -1,12 +1,13 @@
 @font-face {
   font-family: "HarmonyOS_Sans_SC_Regular";
-  src: url(assets/fonts/HarmonyOS_Sans_SC_Regular.ttf);
+  src: url(/assets/fonts/HarmonyOS_Sans_SC_Regular.ttf);
 }
 
 @font-face {
   font-family: "MonaspaceRadon_Regular";
-  src: url(assets/fonts/MonaspaceRadon-Regular.otf);
+  src: url(/assets/fonts/MonaspaceRadon-Regular.otf);
 }
+
 
 :root {
   --Color_light: black;
