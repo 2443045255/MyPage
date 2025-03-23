@@ -46,8 +46,8 @@
   --btn1_HoverColor_dark: rgb(40, 40, 40);
   --btn1_ActiveColor_dark: rgb(70, 70, 70);
 
-  --caretColor-light:black;
-  --caretColor-dark:white;
+  --caretColor-light: black;
+  --caretColor-dark: white;
 }
 
 /* @media (prefers-color-scheme: light) {
@@ -77,7 +77,7 @@
   --btn1_BorderColor: var(--btn1_BorderColor_light);
   --btn1_HoverColor: var(--btn1_HoverColor_light);
   --btn1_ActiveColor: var(--btn1_ActiveColor_light);
-  --caretColor:var(--caretColor-light);
+  --caretColor: var(--caretColor-light);
 }
 
 .dark {
@@ -97,5 +97,5 @@
   --btn1_BorderColor: var(--btn1_BorderColor_dark);
   --btn1_HoverColor: var(--btn1_HoverColor_dark);
   --btn1_ActiveColor: var(--btn1_ActiveColor_dark);
-  --caretColor:var(--caretColor-dark);
+  --caretColor: var(--caretColor-dark);
 }

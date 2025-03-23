@@ -3,9 +3,6 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rxaser个人主页</title>
   <style>
     .loading {
       z-index: 100;
@@ -87,17 +84,30 @@
       }
     }
   </style>
+  <script>
+    window.closeLoadingContainer = function () {
+      setTimeout(() => {
+        document.getElementById("loading").classList.add('loading_close')
+      }, 500);
+    };
+  </script>
+  <link rel="icon" href="favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rxaser个人主页</title>
 </head>
 
 <body>
-  <div id="loading" class="loading">
-    <div class="loading-body">
-      <div class="loading-item">
-        <div class="loading-i2"></div>
+  <div class="before-app-mounted">
+    <div id="loading" class="loading">
+      <div class="loading-body">
+        <div class="loading-item">
+          <div class="loading-i2"></div>
+        </div>
       </div>
+      <span>加载中</span>
     </div>
-    <span>加载中</span>
   </div>
+
   <div id="app"></div>
   <script type="module" src="/src/main.js"></script>
   <script>
@@ -108,14 +118,5 @@
     }
   </script>
 </body>
-<script>
-  var loading = document.getElementById("loading")
-  document.addEventListener("DOMContentLoaded", function () {
-    setTimeout(() => {
-      loading.classList.add('loading_close')
-    }, 1000);
-  })
-
-</script>
 
 </html>
