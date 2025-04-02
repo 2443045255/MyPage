@@ -108,24 +108,32 @@ onMounted(function () {
   }
 
   //处理发送
+  var isConnect = false
+
   var sendBtn = document.getElementById("sendBtn")
   sendBtn.onclick = function () {
-    Msg1()
+    // Msg1("警告","开发中")
+    if (isConnect) {//判断是否连接服务器
+
+    }
   }
 
   //socket连接
   const socket = io("ws://localhost:802");
 
   socket.on("connect_error", () => {
+    isConnect = false
     console.log("连接错误，重新连接");
     socket.connect();
   });
 
   socket.on("connect", () => {
     console.log(socket.id);
+    isConnect = true
   });
 
   socket.on("disconnect", () => {
+    isConnect = false
     console.log(socket.connected); // false
   });
 
@@ -133,14 +141,17 @@ onMounted(function () {
     console.log(data);
 
   });
+  function sendMsg(){
+    
+  }
 })
 
 //弹窗提示
-const Msg1 = () => {
+const Msg1 = (type, message, duration = 2000) => {
   RxaserMessage({
-    type: "警告",
-    message: "开发中，敬请期待",
-    duration: 2000
+    type: type,
+    message: message,
+    duration: duration
   })
 }
 
