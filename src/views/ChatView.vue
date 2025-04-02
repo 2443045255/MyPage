@@ -12,7 +12,7 @@
       </div>
       <div class="chatBody">
         <div class="chatTxt" ref="chatTxt">
-
+          <ChatUser />
         </div>
         <div class="chatInputGroup" ref="chatInputGroup">
           <div class="chatInputTextareaDiv">
@@ -45,10 +45,12 @@
   </main>
 </template>
 <script setup>
+import { onMounted, ref } from 'vue';
 import { io } from "socket.io-client";
 import RxaserMessage from './components/Message/Message'
 
-import { onMounted, ref } from 'vue';
+import ChatUser from "./Single File Components/ChatUser.vue";
+
 var px = "px"
 
 //定义标签的对应ref
@@ -179,7 +181,7 @@ main {
 
 .chatTxt {
   height: 100%;
-  padding: 0 7.5px;
+  padding: 5px 7.5px;
 }
 
 
