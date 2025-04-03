@@ -47,14 +47,18 @@ onMounted(function () {
   width: 100%;
   height: 100%;
 }
+
 .chatUserTxt {
   margin-left: 5px;
   background-color: rgb(143, 244, 255);
   padding: 2px 4px;
   border-radius: 4px;
   font-size: 14px;
+  line-height: 1.4;
 
   overflow-wrap: break-word;
   white-space: pre-wrap;
+
+  font-family: "MonaspaceNeon_Regular";
 }
 </style>

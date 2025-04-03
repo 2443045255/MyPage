@@ -143,8 +143,8 @@ onMounted(function () {
     console.log(data);
 
   });
-  function sendMsg(){
-    
+  function sendMsg() {
+
   }
 })
 

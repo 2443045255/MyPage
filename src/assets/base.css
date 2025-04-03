@@ -8,6 +8,10 @@
   src: url(/assets/fonts/MonaspaceRadon-Regular.otf);
 }
 
+@font-face {
+  font-family: "MonaspaceNeon_Regular";
+  src: url(/assets/fonts/MonaspaceNeon-Regular.otf);
+}
 
 :root {
   --Color_light: black;

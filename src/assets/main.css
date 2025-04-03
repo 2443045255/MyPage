@@ -25,7 +25,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--defaultColor);
   background: var(--defaultBgColor);
-  font-family: "HarmonyOS_Sans_SC_Regular" !important;
+  /* font-family: "HarmonyOS_Sans_SC_Regular" !important; */
 }
 
 a {
