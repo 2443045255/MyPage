@@ -12,7 +12,7 @@
       </div>
       <div class="chatBody">
         <div class="chatTxt" ref="chatTxt">
-          <ChatUser />
+          <ChatUser v-for="key in UserMsgArray['room1']" :key="key" :UserMsg="key" />
         </div>
         <div class="chatInputGroup" ref="chatInputGroup">
           <div class="chatInputTextareaDiv">
@@ -62,6 +62,14 @@ function chatTxt_pb() {
   chatTxt.value.style.paddingBottom = chatInputGroup.value.offsetHeight + 5 + px
 }
 
+//存放聊天记录
+const UserMsgArray = ref({
+  "room1": [
+    { userID: "123", userName: "123", userMsg: ["123"] },
+    { userID: "456", userName: "456", userMsg: ["456", "456\n你好世界"] },
+  ]
+})
+
 onMounted(function () {
   chatTxt_pb()
 
@@ -108,6 +116,9 @@ onMounted(function () {
         break;
     }
   }
+
+
+
 
   //处理发送
   var isConnect = false

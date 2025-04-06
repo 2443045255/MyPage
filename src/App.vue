@@ -83,6 +83,10 @@ onMounted(() => {
   屏幕小于900();
   RouterLinkClick();
   schemelister();
+
+  setTimeout(() => {
+    document.documentElement.style.setProperty("--font", `"HarmonyOS_Sans_SC_Regular"`)
+  }, 2000);
 });
 
 function 更新侧边栏宽度() {

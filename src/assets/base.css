@@ -14,6 +14,11 @@
 }
 
 :root {
+  /* 字体 */
+  --font: "Microsoft YaHei";
+  /* "HarmonyOS_Sans_SC_Regular" */
+
+  /* 颜色 */
   --Color_light: black;
   --Color_dark: white;
 
