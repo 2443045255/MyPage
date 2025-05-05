@@ -1,1 +1,1 @@
-start /b npm run dev
+npm run dev

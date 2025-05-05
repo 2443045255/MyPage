@@ -7,12 +7,18 @@
         </div>
         <div class="TitleBtnBody">
           <span class="TitleBtn pi_05em a default-hoverBg">在线用户</span>
-          <span id="SelectRoomBtn" class="TitleBtn pi_05em a default-hoverBg">房间</span>
+          <span id="SelectRoomBtn" class="TitleBtn pi_05em a default-hoverBg"
+            >房间</span
+          >
         </div>
       </div>
       <div class="chatBody">
         <div class="chatTxt" ref="chatTxt">
-          <ChatUser v-for="key in UserMsgArray['room1']" :key="key" :UserMsg="key" />
+          <ChatUser
+            v-for="key in UserMsgArray['room1']"
+            :key="key"
+            :UserMsg="key"
+          />
         </div>
         <div class="chatInputGroup" ref="chatInputGroup">
           <div class="chatInputTextareaDiv">
@@ -45,132 +51,124 @@
   </main>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from "vue";
 import { io } from "socket.io-client";
-import RxaserMessage from './components/Message/Message'
+import RxaserMessage from "./components/Message/Message";
+import ChatUser from "./components_1/ChatUser.vue";
 
-import ChatUser from "./Single File Components/ChatUser.vue";
-
-var px = "px"
+var px = "px";
 
 //定义标签的对应ref
-const chatTxt = ref(null)
-const chatInputGroup = ref(null)
+const chatTxt = ref(null);
+const chatInputGroup = ref(null);
 
 //处理同步输入框和聊天文本框的底部高度
 function chatTxt_pb() {
-  chatTxt.value.style.paddingBottom = chatInputGroup.value.offsetHeight + 5 + px
+  chatTxt.value.style.paddingBottom =
+    chatInputGroup.value.offsetHeight + 5 + px;
 }
 
 //存放聊天记录
 const UserMsgArray = ref({
-  "room1": [
+  room1: [
     { userID: "123", userName: "123", userMsg: ["123"] },
     { userID: "456", userName: "456", userMsg: ["456", "456\n你好世界"] },
-  ]
-})
+  ],
+});
 
 onMounted(function () {
-  chatTxt_pb()
+  chatTxt_pb();
 
   //处理输入框的高度
-  var chatInputTextarea = document.getElementById("chatInputTextarea")
+  var chatInputTextarea = document.getElementById("chatInputTextarea");
   chatInputTextarea.addEventListener("input", function () {
-    this.style.height = "0px"
-    this.offsetHeight
-    this.style.height = this.scrollHeight + px
-    chatTxt_pb()
-  })
+    this.style.height = "0px";
+    this.offsetHeight;
+    this.style.height = this.scrollHeight + px;
+    chatTxt_pb();
+  });
 
   //处理聊天室选择界面的关闭
-  var SelectRoomBtn = document.getElementById("SelectRoomBtn")
-  var chatSelectCloseBtn = document.getElementById("chatSelectCloseBtn")
-  var chatSelectDiv = document.getElementById("chatSelect")
-  var chatSelectBgDiv = document.getElementById('chatSelectBg')
+  var SelectRoomBtn = document.getElementById("SelectRoomBtn");
+  var chatSelectCloseBtn = document.getElementById("chatSelectCloseBtn");
+  var chatSelectDiv = document.getElementById("chatSelect");
+  var chatSelectBgDiv = document.getElementById("chatSelectBg");
   chatSelectBgDiv.onclick = function () {
-    if (chatSelectBgDiv.classList.contains('no-show')) {
-      chatSelectDivOpenClose(true)
+    if (chatSelectBgDiv.classList.contains("no-show")) {
+      chatSelectDivOpenClose(true);
     } else {
-      chatSelectDivOpenClose(false)
+      chatSelectDivOpenClose(false);
     }
-  }
+  };
   SelectRoomBtn.onclick = function () {
-    chatSelectDivOpenClose(true)
-  }
+    chatSelectDivOpenClose(true);
+  };
   chatSelectCloseBtn.onclick = function () {
-    chatSelectDivOpenClose(false)
-  }
+    chatSelectDivOpenClose(false);
+  };
   function chatSelectDivOpenClose(value) {
     //true显示chatSelectDiv
     //false隐藏chatSelectDiv
     switch (value) {
       case true:
-        chatSelectDiv.style.setProperty('--chatSelect_left', '0%');
-        chatSelectBgDiv.classList.remove('no-show')
+        chatSelectDiv.style.setProperty("--chatSelect_left", "0%");
+        chatSelectBgDiv.classList.remove("no-show");
         break;
       case false:
-        chatSelectDiv.style.setProperty('--chatSelect_left', '100%');
-        chatSelectBgDiv.classList.add('no-show')
+        chatSelectDiv.style.setProperty("--chatSelect_left", "100%");
+        chatSelectBgDiv.classList.add("no-show");
         break;
       default:
         break;
     }
   }
 
-
-
-
   //处理发送
-  var isConnect = false
+  var isConnect = false;
 
-  var sendBtn = document.getElementById("sendBtn")
+  var sendBtn = document.getElementById("sendBtn");
   sendBtn.onclick = function () {
     // Msg1("警告","开发中")
-    if (isConnect) {//判断是否连接服务器
-
+    if (isConnect) {
+      //判断是否连接服务器
     }
-  }
+  };
 
   //socket连接
   const socket = io("ws://localhost:802");
 
   socket.on("connect_error", () => {
-    isConnect = false
+    isConnect = false;
     console.log("连接错误，重新连接");
     socket.connect();
   });
 
   socket.on("connect", () => {
     console.log(socket.id);
-    isConnect = true
+    isConnect = true;
   });
 
   socket.on("disconnect", () => {
-    isConnect = false
+    isConnect = false;
     console.log(socket.connected); // false
   });
 
   socket.on("data", (data) => {
     console.log(data);
-
   });
-  function sendMsg() {
-
-  }
-})
+  function sendMsg() {}
+});
 
 //弹窗提示
 const Msg1 = (type, message, duration = 2000) => {
   RxaserMessage({
     type: type,
     message: message,
-    duration: duration
-  })
-}
+    duration: duration,
+  });
+};
 
-function 添加按键监听() {
-
-}
+function 添加按键监听() {}
 </script>
 <style scoped>
 main {
@@ -195,8 +193,6 @@ main {
   padding: 5px 7.5px;
 }
 
-
-
 .chatInputGroup {
   width: 100%;
   position: absolute;
@@ -208,12 +204,12 @@ main {
   box-shadow: 0px -10px 5px rgba(80, 80, 80, 0.1);
 }
 
-.chatInputGroup>.chatInputTextareaDiv,
-.chatInputGroup>button {
+.chatInputGroup > .chatInputTextareaDiv,
+.chatInputGroup > button {
   border-radius: 4px;
 }
 
-.chatInputGroup>.chatInputTextareaDiv {
+.chatInputGroup > .chatInputTextareaDiv {
   width: 89%;
   margin-right: 1%;
   padding: 4px;
@@ -224,13 +220,13 @@ main {
   max-height: 108px;
 }
 
-.chatInputTextareaDiv>textarea {
+.chatInputTextareaDiv > textarea {
   width: 100%;
   height: 21px;
   font-size: 16px;
 }
 
-.chatInputGroup>button {
+.chatInputGroup > button {
   flex: 1;
   height: initial;
   word-break: keep-all;
@@ -259,7 +255,7 @@ main {
   top: 0;
   right: 0;
   height: 100%;
-  transition: transform .2s;
+  transition: transform 0.2s;
   background-color: var(--defaultBgColor);
   transform: translateX(var(--chatSelect_left));
   --chatSelect_left: 100%;
@@ -288,8 +284,8 @@ main {
   grid-template-columns: 1fr 2fr 2fr;
 }
 
-.chatSelectSetting>div {
-  padding: .3rem 0;
+.chatSelectSetting > div {
+  padding: 0.3rem 0;
   color: rgb(203, 36, 147);
   display: flex;
   align-items: center;
@@ -308,16 +304,15 @@ main {
   background-color: rgba(255, 0, 0, 0.3);
 }
 
-
 .chatSelectOption {
-  padding: .2rem .3rem;
+  padding: 0.2rem 0.3rem;
   font-size: 14px;
   border-top: 1px solid;
-  transition: padding-left .1s;
+  transition: padding-left 0.1s;
 }
 
 .chatSelectOption:hover {
-  padding-left: .4rem;
+  padding-left: 0.4rem;
 }
 
 .chatSelectOption:last-child {
@@ -328,7 +323,7 @@ main {
   border-left: 2px solid;
 }
 
-.chatSelectOptionActive>p:first-child {
+.chatSelectOptionActive > p:first-child {
   color: rgb(0, 163, 114);
 }
 
