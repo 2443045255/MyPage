@@ -8,12 +8,12 @@
         <div class="chatUserID">{{ UserMsg.userID }}</div>
         <div class="chatUserName">{{ UserMsg.userName }}</div>
       </div>
-      <div
-        class="chatUserTxt"
-        v-for="(item, index) in UserMsg.userMsg"
-        :key="index"
-      >
-        {{ item }}
+      <div class="chatUserTxt" v-for="(item, index) in UserMsg.userMsg" :key="index">
+        {{ item.msg }}
+        <div class="chatUserTxtTime">
+          <p class="year">{{ UserYear(item.time) }}</p>
+          <p class="time">{{ UserTime(item.time) }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -23,6 +23,13 @@ import { ref, onMounted } from "vue";
 
 const props = defineProps(["UserMsg"]);
 const chatUser = ref(null);
+
+function UserYear(timeArr) {
+  return `${timeArr[0]}年${timeArr[1]}月${timeArr[2]}日`
+}
+function UserTime(timeArr) {
+  return `${timeArr[3]}:${timeArr[4]}`
+}
 
 onMounted(function () {
   // chatUserTxt.value.innerText = "wasd\n你好世界";
@@ -43,6 +50,7 @@ onMounted(function () {
   width: fit-content;
   display: flex;
 }
+
 .chatUserID {
   margin-right: 5px;
 }
@@ -76,6 +84,7 @@ onMounted(function () {
 .chatUserTxtArr {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .chatUserTxt {
@@ -96,6 +105,22 @@ onMounted(function () {
   border: 1px solid #333;
 
   position: relative;
+}
+
+.chatUserTxtTime {
+  position: absolute;
+  content: "";
+  left: 100%;
+  padding-left: 5px;
+  top: 0px;
+  width: max-content;
+  font-size: 10px;
+
+  display: none;
+}
+
+.chatUserTxt:hover>.chatUserTxtTime {
+  display: block;
 }
 
 .right {
@@ -120,5 +145,12 @@ onMounted(function () {
 .right .chatUserID {
   margin: 0;
   margin-left: 5px;
+}
+
+.right .chatUserTxtTime {
+  left: initial;
+  right: 100%;
+  padding: 0;
+  padding-right: 5px;
 }
 </style>
