@@ -5,14 +5,18 @@
     </div>
     <div class="chatUserTxtArr">
       <div class="chatUserTitle">
-        <div class="chatUserID">{{ UserMsg.userID }}</div>
-        <div class="chatUserName">{{ UserMsg.userName }}</div>
+        <div class="chatUserID">{{ UserMsgArray.userID }}</div>
+        <div class="chatUserName">{{ UserMsgArray.userName }}</div>
       </div>
-      <div class="chatUserTxt" v-for="(item, index) in UserMsg.userMsg" :key="index">
-        {{ item.msg }}
+      <div
+        class="chatUserTxt"
+        v-for="(item, index) in UserMsgArray.userMsg_Time"
+        :key="index"
+      >
+        {{ item[0] }}
         <div class="chatUserTxtTime">
-          <p class="year">{{ UserYear(item.time) }}</p>
-          <p class="time">{{ UserTime(item.time) }}</p>
+          <p class="year">{{ UserYear(item[1]) }}</p>
+          <p class="time">{{ UserTime(item[1]) }}</p>
         </div>
       </div>
     </div>
@@ -21,20 +25,20 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
-const props = defineProps(["UserMsg"]);
+const props = defineProps(["UserMsgArray"]);
 const chatUser = ref(null);
 
 function UserYear(timeArr) {
-  return `${timeArr[0]}年${timeArr[1]}月${timeArr[2]}日`
+  return `${timeArr[0]}年${timeArr[1]}月${timeArr[2]}日`;
 }
 function UserTime(timeArr) {
-  return `${timeArr[3]}:${timeArr[4]}`
+  return `${timeArr[3]}:${timeArr[4]}`;
 }
 
 onMounted(function () {
   // chatUserTxt.value.innerText = "wasd\n你好世界";
-  const MyUserName = "123";
-  if (MyUserName == props.UserMsg.userName) {
+  const MyUserName = "111";
+  if (MyUserName == props.UserMsgArray.userName) {
     chatUser.value.classList.add("right");
   }
 });
@@ -119,7 +123,7 @@ onMounted(function () {
   display: none;
 }
 
-.chatUserTxt:hover>.chatUserTxtTime {
+.chatUserTxt:hover > .chatUserTxtTime {
   display: block;
 }
 

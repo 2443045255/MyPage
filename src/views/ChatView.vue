@@ -7,12 +7,18 @@
         </div>
         <div class="TitleBtnBody">
           <span class="TitleBtn pi_05em a default-hoverBg">在线用户</span>
-          <span id="SelectRoomBtn" class="TitleBtn pi_05em a default-hoverBg">房间</span>
+          <span id="SelectRoomBtn" class="TitleBtn pi_05em a default-hoverBg"
+            >房间</span
+          >
         </div>
       </div>
       <div class="chatBody">
         <div class="chatTxt" ref="chatTxt">
-          <ChatUser v-for="key in UserMsgArray['room1']" :key="key" :UserMsg="key" />
+          <ChatUser
+            v-for="(item, index) in UserMsgObj[room]"
+            :key="index"
+            :UserMsgArray="item"
+          />
         </div>
         <div class="chatInputGroup" ref="chatInputGroup">
           <div class="chatInputTextareaDiv">
@@ -47,6 +53,11 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { io } from "socket.io-client";
+// 使用仓库
+import { useStore } from "@/stores/counter";
+const store = useStore();
+const { getUserMsgHistory } = useStore();
+
 import RxaserMessage from "./components/Message/Message";
 import ChatUser from "./ChatView_components/ChatUser.vue";
 
@@ -62,26 +73,19 @@ function chatTxt_pb() {
     chatInputGroup.value.offsetHeight + 5 + px;
 }
 
-//存放聊天记录
-const UserMsgArray = ref({
-  room1: [
-    {
-      userID: "123", userName: "123", userMsg: [{
-        msg: "123",
-        time: [2024, 10, 1, 9, 30]
-      }]
-    },
-    {
-      userID: "456", userName: "456", userMsg: [{
-        msg: "456",
-        time: [2024, 10, 2, 9, 30]
-      }, {
-        msg: "456\n你好世界",
-        time: [2024, 10, 3, 9, 30]
-      }]
-    },
-  ],
-});
+// 初始化聊天记录
+const room = ref("room_1");
+const UserMsgObj = ref({});
+UserMsgObj.value[room] = [];
+
+// 获取聊天记录
+getUserMsgHistory(room.value, 2)
+  .then((result) => {
+    UserMsgObj.value[room.value] = result;
+  })
+  .catch((error) => {
+    console.error("发生错误：", error);
+  });
 
 onMounted(function () {
   chatTxt_pb();
@@ -163,7 +167,7 @@ onMounted(function () {
   socket.on("data", (data) => {
     console.log(data);
   });
-  function sendMsg() { }
+  function sendMsg() {}
 });
 
 //弹窗提示
@@ -175,7 +179,7 @@ const Msg1 = (type, message, duration = 2000) => {
   });
 };
 
-function 添加按键监听() { }
+function 添加按键监听() {}
 </script>
 <style scoped>
 main {
@@ -211,12 +215,12 @@ main {
   box-shadow: 0px -10px 5px rgba(80, 80, 80, 0.1);
 }
 
-.chatInputGroup>.chatInputTextareaDiv,
-.chatInputGroup>button {
+.chatInputGroup > .chatInputTextareaDiv,
+.chatInputGroup > button {
   border-radius: 4px;
 }
 
-.chatInputGroup>.chatInputTextareaDiv {
+.chatInputGroup > .chatInputTextareaDiv {
   width: 89%;
   margin-right: 1%;
   padding: 4px;
@@ -227,13 +231,13 @@ main {
   max-height: 108px;
 }
 
-.chatInputTextareaDiv>textarea {
+.chatInputTextareaDiv > textarea {
   width: 100%;
   height: 21px;
   font-size: 16px;
 }
 
-.chatInputGroup>button {
+.chatInputGroup > button {
   flex: 1;
   height: initial;
   word-break: keep-all;
@@ -291,7 +295,7 @@ main {
   grid-template-columns: 1fr 2fr 2fr;
 }
 
-.chatSelectSetting>div {
+.chatSelectSetting > div {
   padding: 0.3rem 0;
   color: rgb(203, 36, 147);
   display: flex;
@@ -330,7 +334,7 @@ main {
   border-left: 2px solid;
 }
 
-.chatSelectOptionActive>p:first-child {
+.chatSelectOptionActive > p:first-child {
   color: rgb(0, 163, 114);
 }
 

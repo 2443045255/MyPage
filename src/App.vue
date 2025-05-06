@@ -22,7 +22,10 @@
 
     <p class="headerInfo">功能</p>
 
-    <div class="headerChildDiv a default-hoverBg schemeSelect" @click="schemeSelect(true)">
+    <div
+      class="headerChildDiv a default-hoverBg schemeSelect"
+      @click="schemeSelect(true)"
+    >
       <div class="schemeSelectTitle">主题选择</div>
       <div class="schemeSelectBody">
         <p>亮</p>
@@ -31,7 +34,10 @@
       </div>
     </div>
 
-    <div class="headerChildDiv a default-hoverBg closeheader" @click="headerOpenClose(true)">
+    <div
+      class="headerChildDiv a default-hoverBg closeheader"
+      @click="headerOpenClose(true)"
+    >
       <span>关闭菜单</span>
     </div>
 
@@ -42,7 +48,10 @@
 
   <section :style="{ marginLeft: header_width + px }">
     <div class="sectionBtnGroup">
-      <div class="headerOpenBtn default-hoverBg a" @click="headerOpenClose(true)">
+      <div
+        class="headerOpenBtn default-hoverBg a"
+        @click="headerOpenClose(true)"
+      >
         <span>三</span>
       </div>
     </div>
@@ -65,6 +74,9 @@ import ToggleBtn from "@/vueModule/ToggleBtn.vue";
 
 // import { RouterLink, RouterView } from "vue-router";
 import { ref, onMounted } from "vue";
+// 使用仓库
+import { useStore } from "@/stores/counter";
+const store = useStore();
 
 const header_width = ref("0px");
 var px = "px";
@@ -75,7 +87,7 @@ onMounted(() => {
   headerEM = document.querySelector("header");
   sectionEM = document.querySelector("section");
   更新侧边栏宽度();
-  sectionEM.addEventListener("scroll", () => { });
+  sectionEM.addEventListener("scroll", () => {});
   window.addEventListener("resize", () => {
     更新侧边栏宽度();
     屏幕小于900();
@@ -85,7 +97,10 @@ onMounted(() => {
   schemelister();
 
   setTimeout(() => {
-    document.documentElement.style.setProperty("--font", `"HarmonyOS_Sans_SC_Regular"`)
+    document.documentElement.style.setProperty(
+      "--font",
+      `"HarmonyOS_Sans_SC_Regular"`
+    );
   }, 500);
 });
 
@@ -126,12 +141,11 @@ function RouterLinkClick() {
   });
 }
 
-import { useCounterStore } from "@/stores/counter";
-const useCounterStore_s = useCounterStore();
-
+// 仓库
 const schemeSelect_val = ref(true);
 function schemeSelect(value = false) {
-  var schemeSelect = useCounterStore_s.schemeSelectClick();
+
+  var schemeSelect = store.schemeSelectClick();
   function schemeToLight() {
     document.documentElement.className = "light";
   }
@@ -233,7 +247,7 @@ header {
   backdrop-filter: blur(2px);
 }
 
-header>a {
+header > a {
   display: block;
 }
 
