@@ -63,7 +63,7 @@
 <script setup>
 import ToggleBtn from "@/vueModule/ToggleBtn.vue";
 
-import { RouterLink, RouterView } from "vue-router";
+// import { RouterLink, RouterView } from "vue-router";
 import { ref, onMounted } from "vue";
 
 const header_width = ref("0px");
@@ -86,7 +86,7 @@ onMounted(() => {
 
   setTimeout(() => {
     document.documentElement.style.setProperty("--font", `"HarmonyOS_Sans_SC_Regular"`)
-  }, 2000);
+  }, 500);
 });
 
 function 更新侧边栏宽度() {
