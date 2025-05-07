@@ -1,5 +1,5 @@
 <template>
-  <div class="chatUser" ref="chatUser">
+  <div class="chatUser" ref="chatUser" :class="[{ 'right': UserMsgArray.userID == getRxaserUser().UserID}]">
     <div class="chatUserHead">
       <img src="/assets/ChatUserHead/vue.svg" alt="" />
     </div>
@@ -8,11 +8,7 @@
         <div class="chatUserID">{{ UserMsgArray.userID }}</div>
         <div class="chatUserName">{{ UserMsgArray.userName }}</div>
       </div>
-      <div
-        class="chatUserTxt"
-        v-for="(item, index) in UserMsgArray.userMsg_Time"
-        :key="index"
-      >
+      <div class="chatUserTxt" v-for="(item, index) in UserMsgArray.userMsg_Time" :key="index">
         {{ item[0] }}
         <div class="chatUserTxtTime">
           <p class="year">{{ UserYear(item[1]) }}</p>
@@ -23,7 +19,11 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
+
+import { useStore } from "@/stores/counter";
+const { getRxaserUser } = useStore();
+
 
 const props = defineProps(["UserMsgArray"]);
 const chatUser = ref(null);
@@ -34,13 +34,13 @@ function UserYear(timeArr) {
 function UserTime(timeArr) {
   return `${timeArr[3]}:${timeArr[4]}`;
 }
+nextTick(() => {
 
+})
 onMounted(function () {
   // chatUserTxt.value.innerText = "wasd\n你好世界";
-  const MyUserName = "111";
-  if (MyUserName == props.UserMsgArray.userName) {
-    chatUser.value.classList.add("right");
-  }
+  console.log();
+  
 });
 </script>
 <style>
@@ -92,6 +92,7 @@ onMounted(function () {
 }
 
 .chatUserTxt {
+  width: fit-content;
   margin-left: 5px;
   background-color: rgb(143, 244, 255);
   padding: 4px 8px;
@@ -123,7 +124,7 @@ onMounted(function () {
   display: none;
 }
 
-.chatUserTxt:hover > .chatUserTxtTime {
+.chatUserTxt:hover>.chatUserTxtTime {
   display: block;
 }
 
@@ -133,8 +134,12 @@ onMounted(function () {
 
 .right .chatUserTxt,
 .right .chatUserTitle {
-  margin: 0;
+  margin-left: 0px;
   margin-right: 5px;
+}
+
+.right .chatUserTxtArr{
+  align-items: end;
 }
 
 .right .chatUserTxt {

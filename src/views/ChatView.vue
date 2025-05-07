@@ -7,24 +7,18 @@
         </div>
         <div class="TitleBtnBody">
           <span class="TitleBtn pi_05em a default-hoverBg">在线用户</span>
-          <span id="SelectRoomBtn" class="TitleBtn pi_05em a default-hoverBg"
-            >房间</span
-          >
+          <span id="SelectRoomBtn" class="TitleBtn pi_05em a default-hoverBg">房间</span>
         </div>
       </div>
       <div class="chatBody">
         <div class="chatTxt" ref="chatTxt">
-          <ChatUser
-            v-for="(item, index) in UserMsgObj[room]"
-            :key="index"
-            :UserMsgArray="item"
-          />
+          <ChatUser v-for="(item, index) in UserMsgObj[room]" :key="index" :UserMsgArray="item" />
         </div>
         <div class="chatInputGroup" ref="chatInputGroup">
           <div class="chatInputTextareaDiv">
-            <textarea name="" id="chatInputTextarea" rows="1"></textarea>
+            <textarea name="" id="chatInputTextarea" rows="1" @change="getUserTxt"></textarea>
           </div>
-          <button id="sendBtn" class="btnColor1">发送</button>
+          <button id="sendBtn" class="btnColor1" @click="sendMsg()">发送</button>
         </div>
       </div>
     </div>
@@ -56,7 +50,7 @@ import { io } from "socket.io-client";
 // 使用仓库
 import { useStore } from "@/stores/counter";
 const store = useStore();
-const { getUserMsgHistory } = useStore();
+const { getUserMsgHistory, getRxaserUser } = useStore();
 
 import RxaserMessage from "./components/Message/Message";
 import ChatUser from "./ChatView_components/ChatUser.vue";
@@ -82,10 +76,18 @@ UserMsgObj.value[room] = [];
 getUserMsgHistory(room.value, 2)
   .then((result) => {
     UserMsgObj.value[room.value] = result;
+    console.log(UserMsgObj.value[room.value]);
+
   })
   .catch((error) => {
     console.error("发生错误：", error);
   });
+
+// 获取预发送文本
+const UserTxt = ref("")
+function getUserTxt(e) {
+  UserTxt.value = e.target.value
+}
 
 onMounted(function () {
   chatTxt_pb();
@@ -134,41 +136,63 @@ onMounted(function () {
     }
   }
 
-  //处理发送
-  var isConnect = false;
-
-  var sendBtn = document.getElementById("sendBtn");
-  sendBtn.onclick = function () {
-    // Msg1("警告","开发中")
-    if (isConnect) {
-      //判断是否连接服务器
-    }
-  };
-
-  //socket连接
-  const socket = io("ws://localhost:802");
-
-  socket.on("connect_error", () => {
-    isConnect = false;
-    console.log("连接错误，重新连接");
-    socket.connect();
-  });
-
-  socket.on("connect", () => {
-    console.log(socket.id);
-    isConnect = true;
-  });
-
-  socket.on("disconnect", () => {
-    isConnect = false;
-    console.log(socket.connected); // false
-  });
-
-  socket.on("data", (data) => {
-    console.log(data);
-  });
-  function sendMsg() {}
 });
+//处理连接服务器
+var isConnect = false;
+//socket连接
+const socket = io("ws://localhost:802");
+
+socket.on("connect_error", () => {
+  isConnect = false;
+  console.log("连接错误，重新连接");
+  socket.connect();
+});
+
+socket.on("connect", () => {
+  socket.emit("连接", getRxaserUser())
+  console.log(socket.id);
+  isConnect = true;
+});
+
+socket.on("disconnect", () => {
+  isConnect = false;
+  console.log(socket.connected); // false
+});
+
+socket.on("msg", (data) => {
+  if (UserMsgObj.value[room.value][UserMsgObj.value[room.value].length - 1].userID == data.userID) {
+    UserMsgObj.value[room.value][UserMsgObj.value[room.value].length - 1].userMsg_Time.push(JSON.parse(data.userMsg_Time))
+  } else {
+    UserMsgObj.value[room.value].push({ ...data })
+    UserMsgObj.value[room.value][UserMsgObj.value[room.value].length - 1].userMsg_Time = [JSON.parse(data.userMsg_Time)]
+  }
+});
+
+
+function getTime() {
+  var now = new Date()
+  return [now.getFullYear(), now.getMonth() + 1, now.getDate(), now.getHours(), now.getMinutes()]
+}
+
+// 处理发送
+function sendMsg() {
+  if (!isConnect) {
+    Msg1("警告", "未连接服务器")
+    return
+  }
+  if (!UserTxt.value) {
+    Msg1("警告", "信息为空")
+    return
+  }
+  if (isConnect) {
+    socket.emit("msg", {
+      userID: getRxaserUser().UserID,
+      userName: getRxaserUser().UserName,
+      userMsg_Time: JSON.stringify([UserTxt.value, getTime()])
+    })
+    Msg1("成功", "发送")
+  }
+}
 
 //弹窗提示
 const Msg1 = (type, message, duration = 2000) => {
@@ -179,7 +203,7 @@ const Msg1 = (type, message, duration = 2000) => {
   });
 };
 
-function 添加按键监听() {}
+function 添加按键监听() { }
 </script>
 <style scoped>
 main {
@@ -215,12 +239,12 @@ main {
   box-shadow: 0px -10px 5px rgba(80, 80, 80, 0.1);
 }
 
-.chatInputGroup > .chatInputTextareaDiv,
-.chatInputGroup > button {
+.chatInputGroup>.chatInputTextareaDiv,
+.chatInputGroup>button {
   border-radius: 4px;
 }
 
-.chatInputGroup > .chatInputTextareaDiv {
+.chatInputGroup>.chatInputTextareaDiv {
   width: 89%;
   margin-right: 1%;
   padding: 4px;
@@ -231,13 +255,36 @@ main {
   max-height: 108px;
 }
 
-.chatInputTextareaDiv > textarea {
+.chatInputTextareaDiv>textarea {
   width: 100%;
   height: 21px;
   font-size: 16px;
+
 }
 
-.chatInputGroup > button {
+.chatInputTextareaDiv::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* 定义滚动条轨道 */
+.chatInputTextareaDiv::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+/* 定义滚动条滑块 */
+.chatInputTextareaDiv::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* 当鼠标悬浮在滑块上时 */
+.chatInputTextareaDiv::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+.chatInputGroup>button {
   flex: 1;
   height: initial;
   word-break: keep-all;
@@ -295,7 +342,7 @@ main {
   grid-template-columns: 1fr 2fr 2fr;
 }
 
-.chatSelectSetting > div {
+.chatSelectSetting>div {
   padding: 0.3rem 0;
   color: rgb(203, 36, 147);
   display: flex;
@@ -334,7 +381,7 @@ main {
   border-left: 2px solid;
 }
 
-.chatSelectOptionActive > p:first-child {
+.chatSelectOptionActive>p:first-child {
   color: rgb(0, 163, 114);
 }
 

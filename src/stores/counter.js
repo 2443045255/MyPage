@@ -23,8 +23,35 @@ export const useStore = defineStore('counter', () => {
         })
         .catch(error => console.error('Error:', error));
     })
-
   }
+
+  // 随机大写和数字字符串
+  function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters[randomIndex];
+    }
+    return result;
+  }
+
+  // 保存获取[UserID,UserName]
+  const RxaserUser = ref({
+    UserID: "",
+    UserName: ""
+  })
+  function getRxaserUser() {
+    if (localStorage.getItem("RxaserUser")) {
+      RxaserUser.value = JSON.parse(localStorage.getItem("RxaserUser"))
+    } else {
+      RxaserUser.value.UserID = generateRandomString(16)
+      RxaserUser.value.UserName = RxaserUser.value.UserID.slice(0, 8)
+      localStorage.setItem("RxaserUser", JSON.stringify(RxaserUser.value))
+    }
+    return RxaserUser.value
+  }
+
 
   // 获取聊天记录
   function getUserMsgHistory(_RoomName, _length) {
@@ -33,34 +60,17 @@ export const useStore = defineStore('counter', () => {
         .then((result) => {
           resolve(result)
         })
-
-
-
-      // setTimeout(() => {
-      //   data = [
-      //     {
-      //       userID: "111",
-      //       userName: "111",
-      //       userMsg: [["111_1", [2024, 10, 1, 8, 1]]],
-      //     },
-      //     {
-      //       userID: "222",
-      //       userName: "222",
-      //       userMsg: [
-      //         ["222_1", [2024, 10, 2, 8, 2]],
-      //         ["222_2", [2024, 10, 2, 8, 3]],
-      //       ],
-      //     },
-      //   ]
-      // }, 1000);
     });
   }
 
 
   return {
     schemeSelect,
+
     schemeSelectClick,
     GetServer,
+    generateRandomString,
+    getRxaserUser,
     getUserMsgHistory,
   }
 })
