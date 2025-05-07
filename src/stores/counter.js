@@ -60,6 +60,9 @@ export const useStore = defineStore('counter', () => {
         .then((result) => {
           resolve(result)
         })
+        .catch((error) => {
+          console.error("发生错误：", error);
+        });
     });
   }
 

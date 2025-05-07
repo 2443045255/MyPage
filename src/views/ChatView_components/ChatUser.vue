@@ -1,5 +1,9 @@
 <template>
-  <div class="chatUser" ref="chatUser" :class="[{ 'right': UserMsgArray.userID == getRxaserUser().UserID}]">
+  <div
+    class="chatUser"
+    ref="chatUser"
+    :class="[{ right: UserMsgArray.userID == getRxaserUser().UserID }]"
+  >
     <div class="chatUserHead">
       <img src="/assets/ChatUserHead/vue.svg" alt="" />
     </div>
@@ -8,7 +12,11 @@
         <div class="chatUserID">{{ UserMsgArray.userID }}</div>
         <div class="chatUserName">{{ UserMsgArray.userName }}</div>
       </div>
-      <div class="chatUserTxt" v-for="(item, index) in UserMsgArray.userMsg_Time" :key="index">
+      <div
+        class="chatUserTxt"
+        v-for="(item, index) in UserMsgArray.userMsg_Time"
+        :key="index"
+      >
         {{ item[0] }}
         <div class="chatUserTxtTime">
           <p class="year">{{ UserYear(item[1]) }}</p>
@@ -19,11 +27,10 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted } from "vue";
 
 import { useStore } from "@/stores/counter";
 const { getRxaserUser } = useStore();
-
 
 const props = defineProps(["UserMsgArray"]);
 const chatUser = ref(null);
@@ -34,13 +41,9 @@ function UserYear(timeArr) {
 function UserTime(timeArr) {
   return `${timeArr[3]}:${timeArr[4]}`;
 }
-nextTick(() => {
-
-})
 onMounted(function () {
   // chatUserTxt.value.innerText = "wasd\n你好世界";
   console.log();
-  
 });
 </script>
 <style>
@@ -124,7 +127,7 @@ onMounted(function () {
   display: none;
 }
 
-.chatUserTxt:hover>.chatUserTxtTime {
+.chatUserTxt:hover > .chatUserTxtTime {
   display: block;
 }
 
@@ -138,7 +141,7 @@ onMounted(function () {
   margin-right: 5px;
 }
 
-.right .chatUserTxtArr{
+.right .chatUserTxtArr {
   align-items: end;
 }
 
