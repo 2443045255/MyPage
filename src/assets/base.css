@@ -57,6 +57,13 @@
 
   --caretColor-light: black;
   --caretColor-dark: white;
+
+  --userMsgBgColor-light: rgb(143, 244, 255);
+  --userMsgBgColor-dark: rgb(90, 153, 160);
+  --userMsgRightBgColor-light: rgb(162, 255, 143);
+  --userMsgRightBgColor-dark: rgb(107, 168, 94);
+  --userMsgTimeColor-light: rgb(85, 85, 85);
+  --userMsgTimeColor-dark: rgb(155, 155, 155);
 }
 
 /* @media (prefers-color-scheme: light) {
@@ -87,6 +94,9 @@
   --btn1_HoverColor: var(--btn1_HoverColor_light);
   --btn1_ActiveColor: var(--btn1_ActiveColor_light);
   --caretColor: var(--caretColor-light);
+  --userMsgBgColor: var(--userMsgBgColor-light);
+  --userMsgRightBgColor: var(--userMsgRightBgColor-light);
+  --userMsgTimeColor:var(--userMsgTimeColor-light)
 }
 
 .dark {
@@ -107,4 +117,7 @@
   --btn1_HoverColor: var(--btn1_HoverColor_dark);
   --btn1_ActiveColor: var(--btn1_ActiveColor_dark);
   --caretColor: var(--caretColor-dark);
+  --userMsgBgColor: var(--userMsgBgColor-dark);
+  --userMsgRightBgColor: var(--userMsgRightBgColor-dark);
+  --userMsgTimeColor:var(--userMsgTimeColor-dark)
 }

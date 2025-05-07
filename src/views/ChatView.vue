@@ -7,18 +7,33 @@
         </div>
         <div class="TitleBtnBody">
           <span class="TitleBtn pi_05em a default-hoverBg">在线用户</span>
-          <span id="SelectRoomBtn" class="TitleBtn pi_05em a default-hoverBg">房间</span>
+          <span id="SelectRoomBtn" class="TitleBtn pi_05em a default-hoverBg"
+            >房间</span
+          >
         </div>
       </div>
       <div class="chatBody">
         <div class="chatTxt" ref="chatTxt">
-          <div class="chatTxtBody" v-if="UserMsgObj[room]">
-            <ChatUser v-for="(item, index) in UserMsgObj[room]" :key="index" :UserMsgArray="item" />
+          <div class="chatTxtBody">
+            <ChatUser
+              v-for="(item, index) in UserMsgObj[room]"
+              :key="index"
+              :UserMsgArray="item"
+            />
           </div>
         </div>
         <div class="chatInputGroup" ref="chatInputGroup">
           <div class="chatInputTextareaDiv">
-            <textarea name="" id="chatInputTextarea" rows="1" @change="getUserTxt"></textarea>
+            <textarea
+              placeholder="[Ctrl+Enter]发送 [Enter]换行"
+              name="UserTxt"
+              id="chatInputTextarea"
+              rows="1"
+              ref="chatInputTextarea"
+              @input="chatInputHeight"
+              v-model="UserTxt"
+              v-on:keyup.ctrl.enter="ctrlEnter"
+            ></textarea>
           </div>
           <button id="sendBtn" class="btnColor1" @click="sendMsg()">
             发送
@@ -49,7 +64,7 @@
   </main>
 </template>
 <script setup>
-import { nextTick, onMounted, ref } from "vue";
+import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import { io } from "socket.io-client";
 // 使用仓库
 import { useStore } from "@/stores/counter";
@@ -73,36 +88,30 @@ function chatTxt_pb() {
 
 // 初始化聊天记录
 const room = ref("room_1");
-const UserMsgObj = ref({});
+const UserMsgObj = reactive({});
 
 // 获取聊天记录 最近 20 条
-getUserMsgHistory(room.value, 14, (data) => {
+getUserMsgHistory(room.value, 20, (data) => {
+  UserMsgObj[room.value] = data;
+
   nextTick(() => {
-    UserMsgObj.value[room.value] = data
-  })
-})
+    chatTxtToEnd();
+  });
+});
 
+const chatInputTextarea = ref(null);
 
-
-// 获取预发送文本
-const UserTxt = ref("");
-function getUserTxt(e) {
-  UserTxt.value = e.target.value;
+//处理输入框的高度
+function chatInputHeight() {
+  let _this = chatInputTextarea.value;
+  _this.style.height = "0px";
+  _this.offsetHeight;
+  _this.style.height = _this.scrollHeight + px;
+  chatTxt_pb();
 }
 
 onMounted(function () {
-
-
   chatTxt_pb();
-
-  //处理输入框的高度
-  var chatInputTextarea = document.getElementById("chatInputTextarea");
-  chatInputTextarea.addEventListener("input", function () {
-    this.style.height = "0px";
-    this.offsetHeight;
-    this.style.height = this.scrollHeight + px;
-    chatTxt_pb();
-  });
 
   //处理聊天室选择界面的关闭
   var SelectRoomBtn = document.getElementById("SelectRoomBtn");
@@ -164,20 +173,19 @@ socket.on("disconnect", () => {
 socket.on("msg", (data) => {
   nextTick(() => {
     if (
-      UserMsgObj.value[room.value][UserMsgObj.value[room.value].length - 1]
-        .userID == data.userID
+      UserMsgObj[room.value][UserMsgObj[room.value].length - 1].userID ==
+      data.userID
     ) {
-      UserMsgObj.value[room.value][
-        UserMsgObj.value[room.value].length - 1
+      UserMsgObj[room.value][
+        UserMsgObj[room.value].length - 1
       ].userMsg_Time.push(JSON.parse(data.userMsg_Time));
     } else {
-      UserMsgObj.value[room.value].push({ ...data });
-      UserMsgObj.value[room.value][
-        UserMsgObj.value[room.value].length - 1
-      ].userMsg_Time = [JSON.parse(data.userMsg_Time)];
+      UserMsgObj[room.value].push({ ...data });
+      UserMsgObj[room.value][UserMsgObj[room.value].length - 1].userMsg_Time = [
+        JSON.parse(data.userMsg_Time),
+      ];
     }
-  })
-
+  });
 });
 
 function getTime() {
@@ -190,6 +198,9 @@ function getTime() {
     now.getMinutes(),
   ];
 }
+
+// 获取预发送文本
+const UserTxt = ref("");
 
 // 处理发送
 function sendMsg() {
@@ -208,6 +219,18 @@ function sendMsg() {
       userMsg_Time: JSON.stringify([UserTxt.value, getTime()]),
     });
     Msg1("成功", "发送");
+    UserTxt.value = "";
+    nextTick(() => {
+      chatInputHeight();
+    });
+    // 判断聊天框是否接近底部
+    if (
+      chatTxt.value.scrollHeight -
+        (chatTxt.value.scrollTop + chatTxt.value.clientHeight) <=
+      200
+    ) {
+      chatTxtToEnd();
+    }
   }
 }
 
@@ -219,8 +242,29 @@ const Msg1 = (type, message, duration = 2000) => {
     duration: duration,
   });
 };
+// 输入框ctrl+enter
+function ctrlEnter() {
+  sendMsg();
+}
 
-function 添加按键监听() { }
+// 聊天框到底部
+function chatTxtToEnd() {
+  var div = document.createElement("div");
+  chatTxt.value.scrollTo({
+    top: chatTxt.value.scrollHeight,
+    behavior: "smooth",
+  });
+  // console.log(chatTxt.value.scrollHeight);
+}
+
+// 测试函数
+function test() {
+  console.log(
+    chatTxt.value.scrollHeight,
+    chatTxt.value.clientHeight,
+    chatTxt.value.scrollTop
+  );
+}
 </script>
 <style scoped>
 main {
@@ -230,6 +274,13 @@ main {
   height: 100%;
   flex: 1;
   flex-flow: column;
+}
+
+.chatRoomTitle {
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .chatRoom {
@@ -272,26 +323,26 @@ main {
   backdrop-filter: blur(10px);
 }
 
-.chatInputGroup>.chatInputTextareaDiv,
-.chatInputGroup>button {
+.chatInputGroup > .chatInputTextareaDiv,
+.chatInputGroup > button {
   border-radius: 4px;
 }
 
-.chatInputGroup>.chatInputTextareaDiv {
+.chatInputGroup > .chatInputTextareaDiv {
   width: 89%;
   margin-right: 1%;
-  padding: 4px;
   display: flex;
   border: 1px solid;
   overflow-x: hidden;
   overflow-y: auto;
+  height: fit-content;
   max-height: 108px;
 }
 
-.chatInputTextareaDiv>textarea {
+.chatInputTextareaDiv > textarea {
   width: 100%;
-  height: 21px;
-  font-size: 16px;
+  font-size: 14px;
+  padding: 4px;
 }
 
 .chatInputTextareaDiv::-webkit-scrollbar {
@@ -315,18 +366,11 @@ main {
   background: #555;
 }
 
-.chatInputGroup>button {
+.chatInputGroup > button {
   flex: 1;
   height: initial;
   word-break: keep-all;
   min-width: 50px;
-}
-
-.chatRoomTitle {
-  border-bottom: 1px solid #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .TitleBtnBody {
@@ -373,7 +417,7 @@ main {
   grid-template-columns: 1fr 2fr 2fr;
 }
 
-.chatSelectSetting>div {
+.chatSelectSetting > div {
   padding: 0.3rem 0;
   color: rgb(203, 36, 147);
   display: flex;
@@ -412,7 +456,7 @@ main {
   border-left: 2px solid;
 }
 
-.chatSelectOptionActive>p:first-child {
+.chatSelectOptionActive > p:first-child {
   color: rgb(0, 163, 114);
 }
 

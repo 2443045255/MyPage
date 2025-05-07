@@ -47,9 +47,14 @@ onMounted(() => {
   font-size: 14px;
 }
 
-.提示{
+.成功{
   color: green;
   background-color: rgb(204, 255, 202);
+}
+
+.预警{
+  color: rgb(255, 160, 19);
+  background-color: rgb(255, 234, 210)
 }
 
 .警告{

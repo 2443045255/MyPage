@@ -1,17 +1,15 @@
 <template>
-  <div
-    class="chatUser"
-    ref="chatUser"
-    :class="[{ right: UserMsgArray.userID == getRxaserUser().UserID }]"
-  >
+  <div class="chatUser" ref="chatUser">
     <div class="chatUserHead">
       <img src="/assets/ChatUserHead/vue.svg" alt="" />
     </div>
     <div class="chatUserTxtArr">
       <div class="chatUserTitle">
-        <div class="chatUserID">{{ UserMsgArray.userID }}</div>
+        <!-- <div class="chatUserID">{{ UserMsgArray.userID }}</div> -->
         <div class="chatUserName">{{ UserMsgArray.userName }}</div>
       </div>
+
+      <!-- 堆叠 -->
       <div
         class="chatUserTxt"
         v-for="(item, index) in UserMsgArray.userMsg_Time"
@@ -23,6 +21,15 @@
           <p class="time">{{ UserTime(item[1]) }}</p>
         </div>
       </div>
+
+      <!-- 不堆叠 -->
+      <!-- <div class="chatUserTxt">
+        {{ UserMsgArray.userMsg_Time[0] }}
+        <div class="chatUserTxtTime">
+          <p class="year">{{ UserYear(UserMsgArray.userMsg_Time[1]) }}</p>
+          <p class="time">{{ UserTime(UserMsgArray.userMsg_Time[1]) }}</p>
+        </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -43,6 +50,9 @@ function UserTime(timeArr) {
 }
 onMounted(function () {
   // chatUserTxt.value.innerText = "wasd\n你好世界";
+  if (props.UserMsgArray.userID == getRxaserUser().UserID) {
+    chatUser.value.classList.add("right");
+  }
   console.log();
 });
 </script>
@@ -92,12 +102,14 @@ onMounted(function () {
   display: flex;
   flex-direction: column;
   position: relative;
+  max-width: calc(100% - 120px);
 }
 
 .chatUserTxt {
   width: fit-content;
+  max-width: 100%;
   margin-left: 5px;
-  background-color: rgb(143, 244, 255);
+  background-color: var(--userMsgBgColor);
   padding: 4px 8px;
   border-radius: 4px;
   border-top-left-radius: 0;
@@ -123,7 +135,7 @@ onMounted(function () {
   top: 0px;
   width: max-content;
   font-size: 10px;
-
+  color: var(--userMsgTimeColor);
   display: none;
 }
 
@@ -148,6 +160,7 @@ onMounted(function () {
 .right .chatUserTxt {
   border-top-left-radius: 4px;
   border-top-right-radius: 0;
+  background-color: var(--userMsgRightBgColor);
 }
 
 .right .chatUserTitle {
