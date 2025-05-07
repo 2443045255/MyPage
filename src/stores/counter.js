@@ -14,15 +14,11 @@ export const useStore = defineStore('counter', () => {
     return schemeSelect.value
   }
 
-  function GetServer(_url) {
-    return new Promise((resolve) => {
-      fetch(_url)
-        .then(response => response.json())
-        .then(data => {
-          resolve(data)
-        })
-        .catch(error => console.error('Error:', error));
-    })
+  function GetServer(_url, callBack) {
+    fetch(_url)
+      .then(response => response.json())
+      .then(data => callBack(data))
+      .catch(error => console.error('Error:', error));
   }
 
   // 随机大写和数字字符串
@@ -54,16 +50,11 @@ export const useStore = defineStore('counter', () => {
 
 
   // 获取聊天记录
-  function getUserMsgHistory(_RoomName, _length) {
-    return new Promise((resolve) => {
-      GetServer(`http://localhost:802/api/UserMsgHistory?RoomName=${_RoomName}&Len=${_length}`)
-        .then((result) => {
-          resolve(result)
-        })
-        .catch((error) => {
-          console.error("发生错误：", error);
-        });
-    });
+  function getUserMsgHistory(_RoomName, _length, callBack) {
+    let url = `http://localhost:802/api/UserMsgHistory?RoomName=${_RoomName}&Len=${_length}`
+    GetServer(url, (data) => {
+      callBack(data)
+    })
   }
 
 

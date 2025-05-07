@@ -7,27 +7,18 @@
         </div>
         <div class="TitleBtnBody">
           <span class="TitleBtn pi_05em a default-hoverBg">在线用户</span>
-          <span id="SelectRoomBtn" class="TitleBtn pi_05em a default-hoverBg"
-            >房间</span
-          >
+          <span id="SelectRoomBtn" class="TitleBtn pi_05em a default-hoverBg">房间</span>
         </div>
       </div>
       <div class="chatBody">
         <div class="chatTxt" ref="chatTxt">
-          <ChatUser
-            v-for="(item, index) in UserMsgObj[room]"
-            :key="index"
-            :UserMsgArray="item"
-          />
+          <div class="chatTxtBody" v-if="UserMsgObj[room]">
+            <ChatUser v-for="(item, index) in UserMsgObj[room]" :key="index" :UserMsgArray="item" />
+          </div>
         </div>
         <div class="chatInputGroup" ref="chatInputGroup">
           <div class="chatInputTextareaDiv">
-            <textarea
-              name=""
-              id="chatInputTextarea"
-              rows="1"
-              @change="getUserTxt"
-            ></textarea>
+            <textarea name="" id="chatInputTextarea" rows="1" @change="getUserTxt"></textarea>
           </div>
           <button id="sendBtn" class="btnColor1" @click="sendMsg()">
             发送
@@ -58,7 +49,7 @@
   </main>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { nextTick, onMounted, ref } from "vue";
 import { io } from "socket.io-client";
 // 使用仓库
 import { useStore } from "@/stores/counter";
@@ -83,16 +74,15 @@ function chatTxt_pb() {
 // 初始化聊天记录
 const room = ref("room_1");
 const UserMsgObj = ref({});
-UserMsgObj.value[room.value] = [];
 
 // 获取聊天记录 最近 20 条
-getUserMsgHistory(room.value, 2)
-  .then((result) => {
-    UserMsgObj.value[room.value] = result;
+getUserMsgHistory(room.value, 14, (data) => {
+  nextTick(() => {
+    UserMsgObj.value[room.value] = data
   })
-  .catch((error) => {
-    console.error("发生错误：", error);
-  });
+})
+
+
 
 // 获取预发送文本
 const UserTxt = ref("");
@@ -101,6 +91,8 @@ function getUserTxt(e) {
 }
 
 onMounted(function () {
+
+
   chatTxt_pb();
 
   //处理输入框的高度
@@ -170,19 +162,22 @@ socket.on("disconnect", () => {
 });
 
 socket.on("msg", (data) => {
-  if (
-    UserMsgObj.value[room.value][UserMsgObj.value[room.value].length - 1]
-      .userID == data.userID
-  ) {
-    UserMsgObj.value[room.value][
-      UserMsgObj.value[room.value].length - 1
-    ].userMsg_Time.push(JSON.parse(data.userMsg_Time));
-  } else {
-    UserMsgObj.value[room.value].push({ ...data });
-    UserMsgObj.value[room.value][
-      UserMsgObj.value[room.value].length - 1
-    ].userMsg_Time = [JSON.parse(data.userMsg_Time)];
-  }
+  nextTick(() => {
+    if (
+      UserMsgObj.value[room.value][UserMsgObj.value[room.value].length - 1]
+        .userID == data.userID
+    ) {
+      UserMsgObj.value[room.value][
+        UserMsgObj.value[room.value].length - 1
+      ].userMsg_Time.push(JSON.parse(data.userMsg_Time));
+    } else {
+      UserMsgObj.value[room.value].push({ ...data });
+      UserMsgObj.value[room.value][
+        UserMsgObj.value[room.value].length - 1
+      ].userMsg_Time = [JSON.parse(data.userMsg_Time)];
+    }
+  })
+
 });
 
 function getTime() {
@@ -225,29 +220,44 @@ const Msg1 = (type, message, duration = 2000) => {
   });
 };
 
-function 添加按键监听() {}
+function 添加按键监听() { }
 </script>
 <style scoped>
 main {
   padding: 0;
   display: flex;
   position: relative;
+  height: 100%;
+  flex: 1;
+  flex-flow: column;
 }
 
 .chatRoom {
   flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-flow: column;
+  height: 0;
 }
 
 .chatBody {
-  flex: 1;
   position: relative;
+  display: flex;
+  flex: 1;
+  height: 0;
+  flex-flow: column;
 }
 
 .chatTxt {
-  height: 100%;
   padding: 5px 7.5px;
+  display: flex;
+  flex: 1;
+  height: 0;
+  flex-flow: column;
+  overflow-y: auto;
+}
+
+.chatTxtBody {
+  flex: 1;
 }
 
 .chatInputGroup {
@@ -259,14 +269,15 @@ main {
   display: flex;
   align-items: stretch;
   box-shadow: 0px -10px 5px rgba(80, 80, 80, 0.1);
+  backdrop-filter: blur(10px);
 }
 
-.chatInputGroup > .chatInputTextareaDiv,
-.chatInputGroup > button {
+.chatInputGroup>.chatInputTextareaDiv,
+.chatInputGroup>button {
   border-radius: 4px;
 }
 
-.chatInputGroup > .chatInputTextareaDiv {
+.chatInputGroup>.chatInputTextareaDiv {
   width: 89%;
   margin-right: 1%;
   padding: 4px;
@@ -277,7 +288,7 @@ main {
   max-height: 108px;
 }
 
-.chatInputTextareaDiv > textarea {
+.chatInputTextareaDiv>textarea {
   width: 100%;
   height: 21px;
   font-size: 16px;
@@ -304,7 +315,7 @@ main {
   background: #555;
 }
 
-.chatInputGroup > button {
+.chatInputGroup>button {
   flex: 1;
   height: initial;
   word-break: keep-all;
@@ -362,7 +373,7 @@ main {
   grid-template-columns: 1fr 2fr 2fr;
 }
 
-.chatSelectSetting > div {
+.chatSelectSetting>div {
   padding: 0.3rem 0;
   color: rgb(203, 36, 147);
   display: flex;
@@ -401,7 +412,7 @@ main {
   border-left: 2px solid;
 }
 
-.chatSelectOptionActive > p:first-child {
+.chatSelectOptionActive>p:first-child {
   color: rgb(0, 163, 114);
 }
 
