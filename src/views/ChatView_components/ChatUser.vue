@@ -1,7 +1,7 @@
 <template>
   <div class="chatUser" ref="chatUser">
     <div class="chatUserHead">
-      <img src="/assets/ChatUserHead/vue.svg" alt="" />
+      <img src="/assets/userHandPhoto/vue.svg" alt="" />
     </div>
     <div class="chatUserTxtArr">
       <div class="chatUserTitle">
@@ -66,6 +66,8 @@ onMounted(function () {
   margin: 0 5px;
   width: fit-content;
   display: flex;
+  line-height: 1;
+  margin-bottom: 4px;
 }
 
 .chatUserID {

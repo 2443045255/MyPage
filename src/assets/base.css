@@ -65,8 +65,6 @@
   --userMsgTimeColor-light: rgb(85, 85, 85);
   --userMsgTimeColor-dark: rgb(155, 155, 155);
 
-  --inputBorderColor-light: black;
-  --inputBorderColor-dark: white;
 }
 
 /* @media (prefers-color-scheme: light) {
@@ -100,7 +98,6 @@
   --userMsgBgColor: var(--userMsgBgColor-light);
   --userMsgRightBgColor: var(--userMsgRightBgColor-light);
   --userMsgTimeColor: var(--userMsgTimeColor-light);
-  --inputBorderColor: var(--inputBorderColor-light);
 }
 
 .dark {
@@ -124,5 +121,4 @@
   --userMsgBgColor: var(--userMsgBgColor-dark);
   --userMsgRightBgColor: var(--userMsgRightBgColor-dark);
   --userMsgTimeColor: var(--userMsgTimeColor-dark);
-  --inputBorderColor: var(--inputBorderColor-dark);
 }

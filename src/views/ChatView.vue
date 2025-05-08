@@ -58,7 +58,7 @@
             <span class="pi_05em">头像:</span>
             <div class="user-info-set">
               <div class="user-info-setHandPhoto">
-                <img src="/public/assets/ChatUserHead/vue.svg" alt="" />
+                <img src="/assets/userHandPhoto/vue.svg" alt="" />
               </div>
             </div>
           </label>
@@ -194,7 +194,11 @@ function userInfoSetCalcel() {
 }
 // 处理确认个人信息修改
 function userInfoSet() {
-  setRxaserUserName(userInfoUserName)
+  if (!userInfoUserName) {
+    Msg1("警告","昵称不能为空")
+    return
+  }
+  setRxaserUserName(userInfoUserName);
 }
 
 onMounted(function () {
@@ -484,6 +488,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .user-info-btn-group {
