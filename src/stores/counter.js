@@ -1,19 +1,27 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import RxaserMessage from "../views/components/Message/Message";
 
 export const useStore = defineStore('counter', () => {
   // state = ref()
   const schemeSelect = ref('light')// 当前主题
-
-
   // actions
   // 切换主题
   function schemeSelectClick() {
     schemeSelect.value == 'light' ? schemeSelect.value = 'dark' : schemeSelect.value = 'light'
-
     return schemeSelect.value
   }
 
+  //弹窗提示
+  function Msg1(type, message, duration = 2000) {
+    RxaserMessage({
+      type: type,
+      message: message,
+      duration: duration,
+    });
+  };
+
+  // 请求服务器
   function GetServer(_url, callBack) {
     fetch(_url)
       .then(response => response.json())
@@ -67,6 +75,7 @@ export const useStore = defineStore('counter', () => {
     schemeSelect,
 
     schemeSelectClick,
+    Msg1,
     GetServer,
     generateRandomString,
     getRxaserUser,

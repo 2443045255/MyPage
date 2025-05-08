@@ -50,43 +50,7 @@
       </div>
     </div>
 
-    <Transition name="user-info">
-      <div class="user-info" v-if="userInfoIsShow">
-        <div class="user-info-body">
-          <h4 class="t-center">聊天个人信息</h4>
-          <label class="user-info-label" for="">
-            <span class="pi_05em">头像:</span>
-            <div class="user-info-set">
-              <div class="user-info-setHandPhoto">
-                <img src="/assets/userHandPhoto/vue.svg" alt="" />
-              </div>
-            </div>
-          </label>
-          <label class="user-info-label" for="">
-            <span class="pi_05em">昵称:</span>
-            <div class="user-info-set">
-              <input
-                type="text"
-                name=""
-                @input="setUserInfo_name"
-                v-bind:value="getRxaserUser().UserName"
-              />
-            </div>
-          </label>
-          <div class="user-info-btn-group">
-            <button class="user-info-ackbtn warn-btn" @click="userInfoSet">
-              确认修改
-            </button>
-            <button
-              class="user-info-ackbtn default-btn"
-              @click="userInfoSetIsShow(), userInfoSetCalcel()"
-            >
-              取消
-            </button>
-          </div>
-        </div>
-      </div>
-    </Transition>
+    <SetUserInfo v-if="userInfoIsShow" :userInfoSetIsShow="userInfoSetIsShow" />
 
     <div
       id="chatSelectBg"
@@ -129,10 +93,11 @@ import { io } from "socket.io-client";
 // 使用仓库
 import { useStore } from "@/stores/counter";
 const store = useStore();
-const { getUserMsgHistory, getRxaserUser, setRxaserUserName } = useStore();
+const { Msg1, getUserMsgHistory, getRxaserUser, setRxaserUserName } =
+  useStore();
 
-import RxaserMessage from "./components/Message/Message";
 import ChatUser from "./ChatView_components/ChatUser.vue";
+import SetUserInfo from "./ChatView_components/SetUserInfo.vue";
 
 var px = "px";
 
@@ -180,25 +145,6 @@ function chatSelectSetIsShow() {
 const userInfoIsShow = ref(false);
 function userInfoSetIsShow() {
   userInfoIsShow.value = !userInfoIsShow.value;
-}
-
-// 接收个人信息修改值
-var userInfoUserName = "";
-function setUserInfo_name(e) {
-  userInfoUserName = e.target.value;
-}
-
-// 处理取消个人信息修改
-function userInfoSetCalcel() {
-  userInfoUserName = getRxaserUser().UserName;
-}
-// 处理确认个人信息修改
-function userInfoSet() {
-  if (!userInfoUserName) {
-    Msg1("警告","昵称不能为空")
-    return
-  }
-  setRxaserUserName(userInfoUserName);
 }
 
 onMounted(function () {
@@ -291,14 +237,6 @@ function sendMsg() {
   }
 }
 
-//弹窗提示
-const Msg1 = (type, message, duration = 2000) => {
-  RxaserMessage({
-    type: type,
-    message: message,
-    duration: duration,
-  });
-};
 // 输入框ctrl+enter
 function ctrlEnter() {
   sendMsg();
@@ -437,68 +375,6 @@ main {
 .TitleBtn {
   border-radius: 4px;
   display: block;
-}
-
-.user-info-enter-active,
-.user-info-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.user-info-enter-from,
-.user-info-leave-to {
-  opacity: 0;
-}
-
-.user-info {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.user-info-body {
-  background-color: var(--defaultBgColor);
-  padding: 20px;
-  border-radius: 6px;
-  position: relative;
-}
-
-.user-info-label {
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-}
-
-.user-info-set {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.user-info-setHandPhoto {
-  height: 40px;
-  width: 40px;
-  border: 1px solid;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.user-info-btn-group {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.user-info-ackbtn {
-  padding: 0.3em 0.8em;
 }
 
 .chatSelectBg {
