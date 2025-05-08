@@ -25,8 +25,8 @@
   --ColorInfo_light: rgba(0, 0, 0, 0.5);
   --ColorInfo_dark: rgba(255, 255, 255, 0.5);
 
-  --bgColor_light: white;
-  --bgColor_dark: rgb(27, 27, 27);
+  --bgColor_light: rgb(245, 245, 245);
+  --bgColor_dark: rgb(30, 30, 30);
 
   --defaultBoxShadowColor_light: rgba(0, 0, 0, 0.3);
   --defaultBoxShadowColor_dark: rgba(255, 255, 255, 0.3);
@@ -64,6 +64,9 @@
   --userMsgRightBgColor-dark: rgb(107, 168, 94);
   --userMsgTimeColor-light: rgb(85, 85, 85);
   --userMsgTimeColor-dark: rgb(155, 155, 155);
+
+  --inputBorderColor-light: black;
+  --inputBorderColor-dark: white;
 }
 
 /* @media (prefers-color-scheme: light) {
@@ -96,7 +99,8 @@
   --caretColor: var(--caretColor-light);
   --userMsgBgColor: var(--userMsgBgColor-light);
   --userMsgRightBgColor: var(--userMsgRightBgColor-light);
-  --userMsgTimeColor:var(--userMsgTimeColor-light)
+  --userMsgTimeColor: var(--userMsgTimeColor-light);
+  --inputBorderColor: var(--inputBorderColor-light);
 }
 
 .dark {
@@ -119,5 +123,6 @@
   --caretColor: var(--caretColor-dark);
   --userMsgBgColor: var(--userMsgBgColor-dark);
   --userMsgRightBgColor: var(--userMsgRightBgColor-dark);
-  --userMsgTimeColor:var(--userMsgTimeColor-dark)
+  --userMsgTimeColor: var(--userMsgTimeColor-dark);
+  --inputBorderColor: var(--inputBorderColor-dark);
 }

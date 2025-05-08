@@ -47,6 +47,11 @@ export const useStore = defineStore('counter', () => {
     }
     return RxaserUser.value
   }
+  // 修改[UserName]
+  function setRxaserUserName(name) {
+    RxaserUser.value.UserName = name
+    localStorage.setItem("RxaserUser", JSON.stringify(RxaserUser.value))
+  }
 
 
   // 获取聊天记录
@@ -65,6 +70,7 @@ export const useStore = defineStore('counter', () => {
     GetServer,
     generateRandomString,
     getRxaserUser,
+    setRxaserUserName,
     getUserMsgHistory,
   }
 })
