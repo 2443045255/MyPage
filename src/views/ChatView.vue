@@ -6,42 +6,22 @@
           <span class="pi_05em">公共聊天室1</span>
         </div>
         <div class="TitleBtnBody">
-          <span
-            class="TitleBtn pi_05em a default-hoverBg"
-            @click="userInfoSetIsShow()"
-            >个人信息</span
-          >
+          <span class="TitleBtn pi_05em a default-hoverBg" @click="userInfoSetIsShow()">个人信息</span>
           <span class="TitleBtn pi_05em a default-hoverBg">在线用户</span>
-          <span
-            id="SelectRoomBtn"
-            class="TitleBtn pi_05em a default-hoverBg"
-            @click="chatSelectSetIsShow()"
-            >房间</span
-          >
+          <span id="SelectRoomBtn" class="TitleBtn pi_05em a default-hoverBg" @click="chatSelectSetIsShow()">房间</span>
         </div>
       </div>
       <div class="chatBody">
         <div class="chatTxt" ref="chatTxt">
           <div class="chatTxtBody">
-            <ChatUser
-              v-for="(item, index) in UserMsgObj[room]"
-              :key="index"
-              :UserMsgArray="item"
-            />
+            <ChatUser v-for="(item, index) in UserMsgObj[room]" :key="index" :UserMsgArray="item" />
           </div>
         </div>
         <div class="chatInputGroup" ref="chatInputGroup">
           <div class="chatInputTextareaDiv">
-            <textarea
-              placeholder="[Ctrl+Enter]发送 [Enter]换行"
-              name="UserTxt"
-              id="chatInputTextarea"
-              rows="1"
-              ref="chatInputTextarea"
-              @input="chatInputHeight"
-              v-model="UserTxt"
-              v-on:keyup.ctrl.enter="ctrlEnter"
-            ></textarea>
+            <textarea placeholder="[Ctrl+Enter]发送 [Enter]换行" name="UserTxt" id="chatInputTextarea" rows="1"
+              ref="chatInputTextarea" @input="chatInputHeight" v-model="UserTxt"
+              v-on:keyup.ctrl.enter="ctrlEnter"></textarea>
           </div>
           <button id="sendBtn" class="btnColor1" @click="sendMsg()">
             发送
@@ -50,26 +30,20 @@
       </div>
     </div>
 
-    <SetUserInfo v-if="userInfoIsShow" :userInfoSetIsShow="userInfoSetIsShow" />
+    <Transition name="user-info">
+      <SetUserInfo v-if="userInfoIsShow" :userInfoSetIsShow="userInfoSetIsShow" />
+    </Transition>
 
-    <div
-      id="chatSelectBg"
-      class="chatSelectBg"
-      :class="[{ 'no-show': !chatSelectIsShow }]"
-    ></div>
+    <Transition name="setUserHandPhoto">
+      <SetUserHandPhoto v-if="store.SetUserHandPhotoIsShow" />
+    </Transition>
 
-    <div
-      id="chatSelect"
-      class="chatSelect"
-      :style="[{ '--chatSelect_left': chatSelectIsShow ? '0%' : '100%' }]"
-    >
+    <div id="chatSelectBg" class="chatSelectBg" :class="[{ 'no-show': !chatSelectIsShow }]"></div>
+
+    <div id="chatSelect" class="chatSelect" :style="[{ '--chatSelect_left': chatSelectIsShow ? '0%' : '100%' }]">
       <div class="chatSelectBody">
         <div class="chatSelectSetting">
-          <div
-            id="chatSelectCloseBtn"
-            class="a color1-hoverBg"
-            @click="chatSelectSetIsShow()"
-          >
+          <div id="chatSelectCloseBtn" class="a color1-hoverBg" @click="chatSelectSetIsShow()">
             <span>X</span>
           </div>
           <div class="a color1-hoverBg">创建房间</div>
@@ -93,11 +67,12 @@ import { io } from "socket.io-client";
 // 使用仓库
 import { useStore } from "@/stores/counter";
 const store = useStore();
-const { Msg1, getUserMsgHistory, getRxaserUser, setRxaserUserName } =
+const { Msg1, getUserMsgHistory, getRxaserUser } =
   useStore();
 
 import ChatUser from "./ChatView_components/ChatUser.vue";
 import SetUserInfo from "./ChatView_components/SetUserInfo.vue";
+import SetUserHandPhoto from "./ChatView_components/SetUserHandPhoto.vue";
 
 var px = "px";
 
@@ -229,7 +204,7 @@ function sendMsg() {
     // 判断聊天框是否接近底部
     if (
       chatTxt.value.scrollHeight -
-        (chatTxt.value.scrollTop + chatTxt.value.clientHeight) <=
+      (chatTxt.value.scrollTop + chatTxt.value.clientHeight) <=
       200
     ) {
       chatTxtToEnd();
@@ -318,12 +293,12 @@ main {
   backdrop-filter: blur(10px);
 }
 
-.chatInputGroup > .chatInputTextareaDiv,
-.chatInputGroup > button {
+.chatInputGroup>.chatInputTextareaDiv,
+.chatInputGroup>button {
   border-radius: 4px;
 }
 
-.chatInputGroup > .chatInputTextareaDiv {
+.chatInputGroup>.chatInputTextareaDiv {
   width: 89%;
   margin-right: 1%;
   display: flex;
@@ -334,7 +309,7 @@ main {
   max-height: 108px;
 }
 
-.chatInputTextareaDiv > textarea {
+.chatInputTextareaDiv>textarea {
   width: 100%;
   font-size: 14px;
   padding: 4px;
@@ -361,7 +336,8 @@ main {
   background: #555;
 }
 
-.chatInputGroup > button {
+.chatInputGroup>button {
+  padding: 0;
   flex: 1;
   height: initial;
   word-break: keep-all;
@@ -375,6 +351,23 @@ main {
 .TitleBtn {
   border-radius: 4px;
   display: block;
+}
+
+/* setUserHandPhoto */
+/* user-info */
+/* 动画 */
+.setUserHandPhoto-enter-active,
+.setUserHandPhoto-leave-active,
+.user-info-enter-active,
+.user-info-leave-active {
+  transition: opacity 0.2s;
+}
+
+.setUserHandPhoto-enter-from,
+.setUserHandPhoto-leave-to,
+.user-info-enter-from,
+.user-info-leave-to {
+  opacity: 0;
 }
 
 .chatSelectBg {
@@ -412,7 +405,7 @@ main {
   grid-template-columns: 1fr 2fr 2fr;
 }
 
-.chatSelectSetting > div {
+.chatSelectSetting>div {
   padding: 0.3rem 0;
   color: rgb(203, 36, 147);
   display: flex;
@@ -451,7 +444,7 @@ main {
   border-left: 2px solid;
 }
 
-.chatSelectOptionActive > p:first-child {
+.chatSelectOptionActive>p:first-child {
   color: rgb(0, 163, 114);
 }
 

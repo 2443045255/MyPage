@@ -2,47 +2,49 @@
   <div class="headerBg" v-show="headerBg" @click="headerOpenClose(true)"></div>
   <header @click="更新侧边栏宽度()">
     <h2 class="logo no-a a">Rxaser page</h2>
-    <p class="headerInfo">导航</p>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/" replace>
-          <span class="routerLickTxt">主页</span>
-        </RouterLink>
-        <RouterLink to="/public" replace>
-          <span class="routerLickTxt">发布</span>
-        </RouterLink>
-        <RouterLink to="/chat" replace>
-          <span class="routerLickTxt">聊天</span>
-        </RouterLink>
-        <RouterLink to="/about" replace>
-          <span class="routerLickTxt">关于</span>
-        </RouterLink>
-      </nav>
-    </div>
-
-    <p class="headerInfo">功能</p>
-
-    <div
-      class="headerChildDiv a default-hoverBg schemeSelect"
-      @click="schemeSelect(true)"
-    >
-      <div class="schemeSelectTitle">主题选择</div>
-      <div class="schemeSelectBody">
-        <p>亮</p>
-        <ToggleBtn :status="schemeSelect_val" />
-        <p>暗</p>
+    <div class="header-body">
+      <p class="headerInfo">导航</p>
+      <div class="wrapper">
+        <nav>
+          <RouterLink to="/" replace>
+            <span class="routerLickTxt">主页</span>
+          </RouterLink>
+          <RouterLink to="/public" replace>
+            <span class="routerLickTxt">发布</span>
+          </RouterLink>
+          <RouterLink to="/chat" replace>
+            <span class="routerLickTxt">聊天</span>
+          </RouterLink>
+          <RouterLink to="/about" replace>
+            <span class="routerLickTxt">关于</span>
+          </RouterLink>
+        </nav>
       </div>
-    </div>
 
-    <div
-      class="headerChildDiv a default-hoverBg closeheader"
-      @click="headerOpenClose(true)"
-    >
-      <span>关闭菜单</span>
-    </div>
+      <p class="headerInfo">功能</p>
 
-    <div class="versionInfo" style="font-size: 12px; text-align: left">
-      <p>版本:<span>1.0.0</span></p>
+      <div
+        class="headerChildDiv a default-hoverBg schemeSelect"
+        @click="schemeSelect(true)"
+      >
+        <div class="schemeSelectTitle">主题选择</div>
+        <div class="schemeSelectBody">
+          <p>亮</p>
+          <ToggleBtn :status="schemeSelect_val" />
+          <p>暗</p>
+        </div>
+      </div>
+
+      <div
+        class="headerChildDiv a default-hoverBg closeheader"
+        @click="headerOpenClose(true)"
+      >
+        <span>关闭菜单</span>
+      </div>
+
+      <div class="versionInfo" style="font-size: 12px; text-align: left">
+        <p>版本:<span>1.0.0</span></p>
+      </div>
     </div>
   </header>
 
@@ -144,7 +146,6 @@ function RouterLinkClick() {
 // 仓库
 const schemeSelect_val = ref(true);
 function schemeSelect(value = false) {
-
   var schemeSelect = store.schemeSelectClick();
   function schemeToLight() {
     document.documentElement.className = "light";
@@ -234,6 +235,14 @@ header {
   border-right: 1px rgb(182, 182, 182) solid;
   background-color: var(--defaultBgColor);
   transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  flex-flow: column;
+}
+
+.header-body {
+  flex: 1;
+  overflow: auto;
 }
 
 .headerBg {

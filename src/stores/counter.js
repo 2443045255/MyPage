@@ -70,9 +70,15 @@ export const useStore = defineStore('counter', () => {
     })
   }
 
+  // 处理修改SetUserHandPhoto显隐
+  const SetUserHandPhotoIsShow = ref(false)
+  function SetUserHandPhotoSetIsShow() {
+    SetUserHandPhotoIsShow.value = !SetUserHandPhotoIsShow.value
+  }
 
   return {
     schemeSelect,
+    SetUserHandPhotoIsShow,
 
     schemeSelectClick,
     Msg1,
@@ -81,5 +87,6 @@ export const useStore = defineStore('counter', () => {
     getRxaserUser,
     setRxaserUserName,
     getUserMsgHistory,
+    SetUserHandPhotoSetIsShow,
   }
 })

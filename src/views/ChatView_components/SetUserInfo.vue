@@ -1,41 +1,31 @@
 <template>
-  <Transition name="user-info">
-    <div class="user-info">
-      <div class="user-info-body">
-        <h4 class="t-center">聊天个人信息</h4>
-        <label class="user-info-label" for="">
-          <span class="pi_05em">头像:</span>
-          <div class="user-info-set">
-            <div class="user-info-setHandPhoto">
-              <img src="/assets/userHandPhoto/vue.svg" alt="" />
-            </div>
+  <div class="user-info absoluteMax">
+    <div class="user-info-body">
+      <h3 class="t-center">个人信息</h3>
+      <label class="user-info-label" for="">
+        <span class="pi_05em">头像:</span>
+        <div class="user-info-set">
+          <div class="user-info-setHandPhoto a" @click="SetUserHandPhotoSetIsShow">
+            <img src="/assets/userHandPhoto/vue.svg" alt="" />
           </div>
-        </label>
-        <label class="user-info-label" for="">
-          <span class="pi_05em">昵称:</span>
-          <div class="user-info-set">
-            <input
-              type="text"
-              name=""
-              @input="setUserInfo_name"
-              v-bind:value="getRxaserUser().UserName"
-            />
-          </div>
-        </label>
-        <div class="user-info-btn-group">
-          <button class="user-info-ackbtn warn-btn" @click="userInfoSet">
-            确认修改
-          </button>
-          <button
-            class="user-info-ackbtn default-btn"
-            @click="userInfoSetIsShow(), userInfoSetCalcel()"
-          >
-            取消
-          </button>
         </div>
+      </label>
+      <label class="user-info-label" for="">
+        <span class="pi_05em">昵称:</span>
+        <div class="user-info-set">
+          <input type="text" name="" @input="setUserInfo_name" v-bind:value="getRxaserUser().UserName" />
+        </div>
+      </label>
+      <div class="user-info-btn-group">
+        <button class="user-info-ackbtn warn-btn" @click="userInfoSet">
+          确认修改
+        </button>
+        <button class="user-info-ackbtn default-btn" @click="userInfoSetIsShow(), userInfoSetCalcel()">
+          取消
+        </button>
       </div>
     </div>
-  </Transition>
+  </div>
 </template>
 
 <script>
@@ -51,7 +41,12 @@ export default {
     };
   },
   computed: {
-    ...mapState(useStore, ["Msg1", "getRxaserUser", "setRxaserUserName"]),
+    ...mapState(useStore, [
+      "Msg1",
+      "getRxaserUser",
+      "setRxaserUserName",
+      "SetUserHandPhotoSetIsShow",
+    ]),
   },
   methods: {
     // 接收个人信息修改值
@@ -75,21 +70,7 @@ export default {
 </script>
 
 <style scoped>
-.user-info-enter-active,
-.user-info-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.user-info-enter-from,
-.user-info-leave-to {
-  opacity: 0;
-}
-
 .user-info {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
@@ -119,17 +100,20 @@ export default {
 .user-info-setHandPhoto {
   height: 40px;
   width: 40px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   position: relative;
 }
-.user-info-setHandPhoto > img {
+
+.user-info-setHandPhoto>img {
   border: 1px solid;
   border-radius: 50%;
   overflow: hidden;
+}
+
+.user-info-setHandPhoto>img:hover {
+  border-color: red;
 }
 
 .user-info-setHandPhoto-body {
@@ -146,9 +130,5 @@ export default {
   margin-top: 20px;
   display: flex;
   justify-content: space-evenly;
-}
-
-.user-info-ackbtn {
-  padding: 0.3em 0.8em;
 }
 </style>
