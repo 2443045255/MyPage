@@ -55,6 +55,12 @@ textarea {
   caret-color: var(--caretColor);
   font-family: inherit;
 }
+input{
+  padding: 4px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid;
+}
 
 button,
 .likeBtn1 {
@@ -78,6 +84,17 @@ button:hover,
 button:active,
 .likeBtn1:active {
   background-color: var(--btn1_ActiveColor);
+}
+
+.warn-btn{
+  padding: .3em .5em;
+  color: rgb(221, 145, 23);
+  background-color: rgb(255, 241, 216);
+  border-color: rgb(255, 230, 188);
+}
+
+.warn-btn:hover{
+  background-color: rgb(255, 230, 188);
 }
 
 main {
@@ -116,6 +133,10 @@ main {
 
 .no-a {
   cursor: default;
+}
+
+.t-center{
+  text-align: center;
 }
 
 .pl_25px {

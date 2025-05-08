@@ -6,8 +6,12 @@
           <span class="pi_05em">公共聊天室1</span>
         </div>
         <div class="TitleBtnBody">
+          <span class="TitleBtn pi_05em a default-hoverBg">个人信息</span>
           <span class="TitleBtn pi_05em a default-hoverBg">在线用户</span>
-          <span id="SelectRoomBtn" class="TitleBtn pi_05em a default-hoverBg"
+          <span
+            id="SelectRoomBtn"
+            class="TitleBtn pi_05em a default-hoverBg"
+            @click="chatSelectSetIsShow()"
             >房间</span
           >
         </div>
@@ -41,11 +45,46 @@
         </div>
       </div>
     </div>
-    <div id="chatSelectBg" class="chatSelectBg no-show"></div>
-    <div id="chatSelect" class="chatSelect">
+
+    <div class="user-info">
+      <div class="user-info-body">
+        <h4 class="t-center">个人信息</h4>
+        <label class="user-info-label" for="">
+          <span class="pi_05em">头像:</span>
+          <div class="user-info-set">
+            <div class="user-info-setHandPhoto">
+              <img src="/public/assets/ChatUserHead/vue.svg" alt="" />
+            </div>
+          </div>
+        </label>
+        <label class="user-info-label" for="">
+          <span class="pi_05em">昵称:</span>
+          <div class="user-info-set">
+            <input type="text" name="" />
+          </div>
+        </label>
+        <button class="user-info-ackbtn warn-btn">确认修改</button>
+      </div>
+    </div>
+
+    <div
+      id="chatSelectBg"
+      class="chatSelectBg"
+      :class="[{ 'no-show': !chatSelectIsShow }]"
+    ></div>
+
+    <div
+      id="chatSelect"
+      class="chatSelect"
+      :style="[{ '--chatSelect_left': chatSelectIsShow ? '0%' : '100%' }]"
+    >
       <div class="chatSelectBody">
         <div class="chatSelectSetting">
-          <div id="chatSelectCloseBtn" class="a color1-hoverBg">
+          <div
+            id="chatSelectCloseBtn"
+            class="a color1-hoverBg"
+            @click="chatSelectSetIsShow()"
+          >
             <span>X</span>
           </div>
           <div class="a color1-hoverBg">创建房间</div>
@@ -64,7 +103,7 @@
   </main>
 </template>
 <script setup>
-import { computed, nextTick, onMounted, reactive, ref } from "vue";
+import { nextTick, onMounted, reactive, ref } from "vue";
 import { io } from "socket.io-client";
 // 使用仓库
 import { useStore } from "@/stores/counter";
@@ -110,44 +149,16 @@ function chatInputHeight() {
   chatTxt_pb();
 }
 
+//处理聊天室选择界面的关闭
+const chatSelectIsShow = ref(false);
+function chatSelectSetIsShow() {
+  chatSelectIsShow.value = !chatSelectIsShow.value;
+}
+
 onMounted(function () {
   chatTxt_pb();
-
-  //处理聊天室选择界面的关闭
-  var SelectRoomBtn = document.getElementById("SelectRoomBtn");
-  var chatSelectCloseBtn = document.getElementById("chatSelectCloseBtn");
-  var chatSelectDiv = document.getElementById("chatSelect");
-  var chatSelectBgDiv = document.getElementById("chatSelectBg");
-  chatSelectBgDiv.onclick = function () {
-    if (chatSelectBgDiv.classList.contains("no-show")) {
-      chatSelectDivOpenClose(true);
-    } else {
-      chatSelectDivOpenClose(false);
-    }
-  };
-  SelectRoomBtn.onclick = function () {
-    chatSelectDivOpenClose(true);
-  };
-  chatSelectCloseBtn.onclick = function () {
-    chatSelectDivOpenClose(false);
-  };
-  function chatSelectDivOpenClose(value) {
-    //true显示chatSelectDiv
-    //false隐藏chatSelectDiv
-    switch (value) {
-      case true:
-        chatSelectDiv.style.setProperty("--chatSelect_left", "0%");
-        chatSelectBgDiv.classList.remove("no-show");
-        break;
-      case false:
-        chatSelectDiv.style.setProperty("--chatSelect_left", "100%");
-        chatSelectBgDiv.classList.add("no-show");
-        break;
-      default:
-        break;
-    }
-  }
 });
+
 //处理连接服务器
 var isConnect = false;
 //socket连接
@@ -382,17 +393,47 @@ main {
   display: block;
 }
 
-.chatSelect {
-  width: 15em;
+.user-info {
   position: absolute;
-  top: 0;
-  right: 0;
+  width: 100%;
   height: 100%;
-  transition: transform 0.2s;
-  background-color: var(--defaultBgColor);
-  transform: translateX(var(--chatSelect_left));
-  --chatSelect_left: 100%;
-  z-index: 2;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-info-body {
+  background: #d8d8d8;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.user-info-label {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.user-info-set{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.user-info-setHandPhoto{
+  height: 40px;
+  width: 40px;
+  border: 1px solid;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-info-ackbtn{
+  padding: .3em .5em;
 }
 
 .chatSelectBg {
@@ -404,6 +445,19 @@ main {
   background: rgba(127, 127, 127, 0.2);
   backdrop-filter: blur(2px);
   z-index: 1;
+}
+
+.chatSelect {
+  width: 15em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  transition: transform 0.2s;
+  background-color: var(--defaultBgColor);
+  transform: translateX(var(--chatSelect_left));
+  --chatSelect_left: 100%;
+  z-index: 2;
 }
 
 .chatSelectBody {
