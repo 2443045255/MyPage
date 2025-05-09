@@ -34,10 +34,6 @@
       <SetUserInfo v-if="userInfoIsShow" :userInfoSetIsShow="userInfoSetIsShow" />
     </Transition>
 
-    <Transition name="setUserHandPhoto">
-      <SetUserHandPhoto v-if="store.SetUserHandPhotoIsShow" />
-    </Transition>
-
     <div id="chatSelectBg" class="chatSelectBg" :class="[{ 'no-show': !chatSelectIsShow }]"></div>
 
     <div id="chatSelect" class="chatSelect" :style="[{ '--chatSelect_left': chatSelectIsShow ? '0%' : '100%' }]">
@@ -67,12 +63,15 @@ import { io } from "socket.io-client";
 // 使用仓库
 import { useStore } from "@/stores/counter";
 const store = useStore();
-const { Msg1, getUserMsgHistory, getRxaserUser } =
-  useStore();
+const {
+  // allUserInfoArr,
+  Msg1, getUserMsgHistory,
+  getRxaserUser,
+  getAllUserInfoArr
+} = useStore();
 
 import ChatUser from "./ChatView_components/ChatUser.vue";
 import SetUserInfo from "./ChatView_components/SetUserInfo.vue";
-import SetUserHandPhoto from "./ChatView_components/SetUserHandPhoto.vue";
 
 var px = "px";
 
@@ -94,9 +93,7 @@ const UserMsgObj = reactive({});
 getUserMsgHistory(room.value, 20, (data) => {
   UserMsgObj[room.value] = data;
 
-  nextTick(() => {
-    chatTxtToEnd();
-  });
+  chatTxtToEnd();
 });
 
 const chatInputTextarea = ref(null);
@@ -124,6 +121,12 @@ function userInfoSetIsShow() {
 
 onMounted(function () {
   chatTxt_pb();
+  getAllUserInfoArr()
+
+  // 10秒获取一次所有用户信息
+  setInterval(() => {
+    getAllUserInfoArr()
+  }, 5000);
 });
 
 //处理连接服务器
@@ -148,11 +151,11 @@ socket.on("disconnect", () => {
   console.log("断开连接:", socket.connected); // false
 });
 
+// 接收消息
 socket.on("msg", (data) => {
   nextTick(() => {
     if (
-      UserMsgObj[room.value][UserMsgObj[room.value].length - 1].userID ==
-      data.userID
+      UserMsgObj[room.value][UserMsgObj[room.value].length - 1].userID == data.userID
     ) {
       UserMsgObj[room.value][
         UserMsgObj[room.value].length - 1
@@ -166,9 +169,11 @@ socket.on("msg", (data) => {
   });
 });
 
-function setUserInfo() {
-
-}
+socket.on("func", (data) => {
+  nextTick(() => {
+    eval(`${data}()`)
+  })
+})
 
 function getTime() {
   var now = new Date();
@@ -198,7 +203,7 @@ function sendMsg() {
     socket.emit("msg", {
       userID: getRxaserUser().UserID,
       userName: getRxaserUser().UserName,
-      userMsg_Time: JSON.stringify([UserTxt.value, getTime()]),
+      userMsg_Time: JSON.stringify([UserTxt.value.trim(), getTime()]),
     });
     Msg1("成功", "发送");
     UserTxt.value = "";
@@ -206,12 +211,11 @@ function sendMsg() {
       chatInputHeight();
     });
     // 判断聊天框是否接近底部
-    if (
-      chatTxt.value.scrollHeight -
-      (chatTxt.value.scrollTop + chatTxt.value.clientHeight) <=
-      200
-    ) {
-      chatTxtToEnd();
+    let ChatTxtNearBottom = chatTxt.value.scrollHeight - (chatTxt.value.scrollTop + chatTxt.value.clientHeight)
+    if (ChatTxtNearBottom <= 200) {
+      setTimeout(() => {
+        chatTxtToEnd()
+      }, 0)
     }
   }
 }
@@ -223,11 +227,13 @@ function ctrlEnter() {
 
 // 聊天框到底部
 function chatTxtToEnd() {
-  var div = document.createElement("div");
-  chatTxt.value.scrollTo({
-    top: chatTxt.value.scrollHeight,
-    behavior: "smooth",
-  });
+  // var div = document.createElement("div");
+  nextTick(() => {
+    chatTxt.value.scrollTo({
+      top: chatTxt.value.scrollHeight,
+      behavior: "smooth",
+    });
+  })
   // console.log(chatTxt.value.scrollHeight);
 }
 
@@ -357,18 +363,13 @@ main {
   display: block;
 }
 
-/* setUserHandPhoto */
 /* user-info */
 /* 动画 */
-.setUserHandPhoto-enter-active,
-.setUserHandPhoto-leave-active,
 .user-info-enter-active,
 .user-info-leave-active {
   transition: opacity 0.2s;
 }
 
-.setUserHandPhoto-enter-from,
-.setUserHandPhoto-leave-to,
 .user-info-enter-from,
 .user-info-leave-to {
   opacity: 0;

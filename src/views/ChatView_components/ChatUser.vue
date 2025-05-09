@@ -1,20 +1,17 @@
 <template>
   <div class="chatUser" ref="chatUser">
     <div class="chatUserHead">
-      <img src="/assets/userHandPhoto/vue.svg" alt="" />
+      <img v-if="store.allUserInfoArr" :src="store.allUserInfoArr[UserMsgArray.userID][1]" alt="" />
     </div>
     <div class="chatUserTxtArr">
       <div class="chatUserTitle">
         <!-- <div class="chatUserID">{{ UserMsgArray.userID }}</div> -->
-        <div class="chatUserName">{{ UserMsgArray.userName }}</div>
+        <div class="chatUserName" v-if="store.allUserInfoArr">{{ store.allUserInfoArr[UserMsgArray.userID][0] }}</div>
+        <div class="chatUserName" v-if="!store.allUserInfoArr">{{ UserMsgArray.userName }}</div>
       </div>
 
       <!-- 堆叠 -->
-      <div
-        class="chatUserTxt"
-        v-for="(item, index) in UserMsgArray.userMsg_Time"
-        :key="index"
-      >
+      <div class="chatUserTxt" v-for="(item, index) in UserMsgArray.userMsg_Time" :key="index">
         {{ item[0] }}
         <div class="chatUserTxtTime">
           <p class="year">{{ UserYear(item[1]) }}</p>
@@ -22,14 +19,6 @@
         </div>
       </div>
 
-      <!-- 不堆叠 -->
-      <!-- <div class="chatUserTxt">
-        {{ UserMsgArray.userMsg_Time[0] }}
-        <div class="chatUserTxtTime">
-          <p class="year">{{ UserYear(UserMsgArray.userMsg_Time[1]) }}</p>
-          <p class="time">{{ UserTime(UserMsgArray.userMsg_Time[1]) }}</p>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -37,8 +26,8 @@
 import { ref, onMounted } from "vue";
 
 import { useStore } from "@/stores/counter";
+const store = useStore()
 const { getRxaserUser } = useStore();
-
 const props = defineProps(["UserMsgArray"]);
 const chatUser = ref(null);
 
@@ -48,12 +37,14 @@ function UserYear(timeArr) {
 function UserTime(timeArr) {
   return `${timeArr[3]}:${timeArr[4]}`;
 }
-onMounted(function () {
+
+onMounted(() => {
+  // console.log(store.allUserInfoArr[props.UserMsgArray.userID][2]);
+
   // chatUserTxt.value.innerText = "wasd\n你好世界";
   if (props.UserMsgArray.userID == getRxaserUser().UserID) {
     chatUser.value.classList.add("right");
   }
-  console.log();
 });
 </script>
 <style>
@@ -141,7 +132,7 @@ onMounted(function () {
   display: none;
 }
 
-.chatUserTxt:hover > .chatUserTxtTime {
+.chatUserTxt:hover>.chatUserTxtTime {
   display: block;
 }
 

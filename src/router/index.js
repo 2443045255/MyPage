@@ -8,7 +8,8 @@ const router = createRouter({
   history: createWebHashHistory(),//路由Hash模式
   routes: [
     {
-      path: '/',
+      // path: '/',
+      path: '/home',
       name: 'home',
       component: HomeView
     },
@@ -18,7 +19,8 @@ const router = createRouter({
       component: PublicView
     },
     {
-      path: '/chat',
+      // path: '/chat',
+      path: '/',
       name: 'chat',
       component: ChatView
     },

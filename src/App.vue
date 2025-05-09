@@ -6,13 +6,13 @@
       <p class="headerInfo">导航</p>
       <div class="wrapper">
         <nav>
-          <RouterLink to="/" replace>
+          <!-- <RouterLink to="/" replace>
             <span class="routerLickTxt">主页</span>
           </RouterLink>
           <RouterLink to="/public" replace>
             <span class="routerLickTxt">发布</span>
-          </RouterLink>
-          <RouterLink to="/chat" replace>
+          </RouterLink> -->
+          <RouterLink to="/" replace>
             <span class="routerLickTxt">聊天</span>
           </RouterLink>
           <RouterLink to="/about" replace>
@@ -23,10 +23,7 @@
 
       <p class="headerInfo">功能</p>
 
-      <div
-        class="headerChildDiv a default-hoverBg schemeSelect"
-        @click="schemeSelect(true)"
-      >
+      <div class="headerChildDiv a default-hoverBg schemeSelect" @click="schemeSelect(true)">
         <div class="schemeSelectTitle">主题选择</div>
         <div class="schemeSelectBody">
           <p>亮</p>
@@ -35,10 +32,7 @@
         </div>
       </div>
 
-      <div
-        class="headerChildDiv a default-hoverBg closeheader"
-        @click="headerOpenClose(true)"
-      >
+      <div class="headerChildDiv a default-hoverBg closeheader" @click="headerOpenClose(true)">
         <span>关闭菜单</span>
       </div>
 
@@ -50,10 +44,7 @@
 
   <section :style="{ marginLeft: header_width + px }">
     <div class="sectionBtnGroup">
-      <div
-        class="headerOpenBtn default-hoverBg a"
-        @click="headerOpenClose(true)"
-      >
+      <div class="headerOpenBtn default-hoverBg a" @click="headerOpenClose(true)">
         <span>三</span>
       </div>
     </div>
@@ -89,7 +80,7 @@ onMounted(() => {
   headerEM = document.querySelector("header");
   sectionEM = document.querySelector("section");
   更新侧边栏宽度();
-  sectionEM.addEventListener("scroll", () => {});
+  sectionEM.addEventListener("scroll", () => { });
   window.addEventListener("resize", () => {
     更新侧边栏宽度();
     屏幕小于900();
@@ -256,7 +247,7 @@ header {
   backdrop-filter: blur(2px);
 }
 
-header > a {
+header>a {
   display: block;
 }
 

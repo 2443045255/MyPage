@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import RxaserMessage from "../views/components/Message/Message";
 
 export const useStore = defineStore('counter', () => {
-  // state = ref()
+
   const schemeSelect = ref('light')// 当前主题
   // actions
   // 切换主题
@@ -26,7 +26,7 @@ export const useStore = defineStore('counter', () => {
     fetch(_url)
       .then(response => response.json())
       .then(data => callBack(data))
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.log('Error:', error));
   }
 
   // 随机大写和数字字符串
@@ -40,66 +40,87 @@ export const useStore = defineStore('counter', () => {
     return result;
   }
 
-  // 保存获取[UserID,UserName,UserHandPhoto]
+
   const RxaserUser = ref({
     UserID: "",
     UserName: "",
     UserHandPhoto: ""
   })
-  function getRxaserUser() {
-    if (localStorage.getItem("RxaserUser")) {
-      RxaserUser.value = JSON.parse(localStorage.getItem("RxaserUser"))
-    } else {
-      RxaserUser.value.UserID = generateRandomString(16)
-      RxaserUser.value.UserName = RxaserUser.value.UserID.slice(0, 8)
-      localStorage.setItem("RxaserUser", JSON.stringify(RxaserUser.value))
-    }
-    return RxaserUser.value
-  }
-  // 修改[RxaserUser]
-  function setRxaserUser(name,url) {
-    if(!name || !url){
-      return false
-    }
-    RxaserUser.value.UserName = name
-    RxaserUser.value.UserHandPhoto = url
+  // 保存[RxaserUser]
+  function saveRxaserUser() {
     localStorage.setItem("RxaserUser", JSON.stringify(RxaserUser.value))
+    let query = `UserID=${RxaserUser.value.UserID}&UserName=${RxaserUser.value.UserName}&UserHandPhoto=${RxaserUser.value.UserHandPhoto}`
+    GetServer("http://127.0.0.1:802/api/saveUserInfo?" + query)
     return true
   }
 
-  const RxaserNewHandPtoto = ref("")
-  function getRxaserNewHandPtoto(url){
-    if(!url && url != RxaserUser.value.UserHandPhoto){
-
+  // 保存获取[UserID,UserName,UserHandPhoto]
+  function getRxaserUser() {
+    if (localStorage.getItem("RxaserUser")) {
+      RxaserUser.value = JSON.parse(localStorage.getItem("RxaserUser"))
+      if (!RxaserUser.value.UserHandPhoto) {
+        RxaserUser.value.UserHandPhoto = "assets/userHandPhoto/YuanShen_1.png"
+        saveRxaserUser()
+      }
+    } else {
+      RxaserUser.value.UserID = generateRandomString(16)
+      RxaserUser.value.UserName = RxaserUser.value.UserID.slice(0, 8)
+      RxaserUser.value.UserHandPhoto = "assets/userHandPhoto/YuanShen_1.png"
+      saveRxaserUser()
     }
+    return RxaserUser.value
+  }
+
+  // 修改[UserName,UserHandPhoto]
+  function setRxaserUserName(name) {
+    if (RxaserUser.value.UserName != name) {
+      RxaserUser.value.UserName = name
+      saveRxaserUser()
+    }
+  }
+  function setRxaserUserHandPhoto(url) {
+    if (RxaserUser.value.UserHandPhoto != url) {
+      RxaserUser.value.UserHandPhoto = url
+      saveRxaserUser()
+    }
+  }
+
+  // 所有用户ID的信息
+  const allUserInfoArr = ref()
+  function getAllUserInfoArr() {
+    GetServer("http://127.0.0.1:802/api/getAllUserInfoArr", (data) => {
+      setAllUserInfoArr(data)
+    })
+  }
+  function setAllUserInfoArr(obj) {
+    if (!obj) return
+    if (allUserInfoArr.value == obj) return
+    allUserInfoArr.value = obj
+    // console.log(allUserInfoArr.value);
   }
 
   // 获取聊天记录
   function getUserMsgHistory(_RoomName, _length, callBack) {
-    let url = `http://localhost:802/api/UserMsgHistory?RoomName=${_RoomName}&Len=${_length}`
+    let query = `RoomName=${_RoomName}&Len=${_length}`
+    let url = `http://localhost:802/api/UserMsgHistory?${query}`
     GetServer(url, (data) => {
       callBack(data)
     })
   }
 
-  // 处理修改SetUserHandPhoto显隐
-  const SetUserHandPhotoIsShow = ref(false)
-  function SetUserHandPhotoSetIsShow() {
-    SetUserHandPhotoIsShow.value = !SetUserHandPhotoIsShow.value
-  }
-
   return {
     schemeSelect,
-    SetUserHandPhotoIsShow,
+    allUserInfoArr,
 
+    setAllUserInfoArr,
     schemeSelectClick,
     Msg1,
     GetServer,
     generateRandomString,
     getRxaserUser,
-    setRxaserUser,
-    getRxaserNewHandPtoto,
+    setRxaserUserName,
+    setRxaserUserHandPhoto,
+    getAllUserInfoArr,
     getUserMsgHistory,
-    SetUserHandPhotoSetIsShow,
   }
 })
