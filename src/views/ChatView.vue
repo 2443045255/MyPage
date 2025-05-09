@@ -126,7 +126,7 @@ onMounted(function () {
   // 10秒获取一次所有用户信息
   setInterval(() => {
     getAllUserInfoArr()
-  }, 5000);
+  }, 1000);
 });
 
 //处理连接服务器
