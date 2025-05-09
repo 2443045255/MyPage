@@ -166,6 +166,10 @@ socket.on("msg", (data) => {
   });
 });
 
+function setUserInfo() {
+
+}
+
 function getTime() {
   var now = new Date();
   return [

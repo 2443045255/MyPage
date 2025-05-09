@@ -40,10 +40,11 @@ export const useStore = defineStore('counter', () => {
     return result;
   }
 
-  // 保存获取[UserID,UserName]
+  // 保存获取[UserID,UserName,UserHandPhoto]
   const RxaserUser = ref({
     UserID: "",
-    UserName: ""
+    UserName: "",
+    UserHandPhoto: ""
   })
   function getRxaserUser() {
     if (localStorage.getItem("RxaserUser")) {
@@ -55,12 +56,23 @@ export const useStore = defineStore('counter', () => {
     }
     return RxaserUser.value
   }
-  // 修改[UserName]
-  function setRxaserUserName(name) {
+  // 修改[RxaserUser]
+  function setRxaserUser(name,url) {
+    if(!name || !url){
+      return false
+    }
     RxaserUser.value.UserName = name
+    RxaserUser.value.UserHandPhoto = url
     localStorage.setItem("RxaserUser", JSON.stringify(RxaserUser.value))
+    return true
   }
 
+  const RxaserNewHandPtoto = ref("")
+  function getRxaserNewHandPtoto(url){
+    if(!url && url != RxaserUser.value.UserHandPhoto){
+
+    }
+  }
 
   // 获取聊天记录
   function getUserMsgHistory(_RoomName, _length, callBack) {
@@ -85,7 +97,8 @@ export const useStore = defineStore('counter', () => {
     GetServer,
     generateRandomString,
     getRxaserUser,
-    setRxaserUserName,
+    setRxaserUser,
+    getRxaserNewHandPtoto,
     getUserMsgHistory,
     SetUserHandPhotoSetIsShow,
   }
