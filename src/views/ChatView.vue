@@ -166,6 +166,7 @@ socket.on("msg", (data) => {
         JSON.parse(data.userMsg_Time),
       ];
     }
+    chatToBottom()
   });
 });
 
@@ -210,13 +211,16 @@ function sendMsg() {
     nextTick(() => {
       chatInputHeight();
     });
-    // 判断聊天框是否接近底部
-    let ChatTxtNearBottom = chatTxt.value.scrollHeight - (chatTxt.value.scrollTop + chatTxt.value.clientHeight)
-    if (ChatTxtNearBottom <= 200) {
-      setTimeout(() => {
-        chatTxtToEnd()
-      }, 0)
-    }
+  }
+}
+
+function chatToBottom() {
+  // 判断聊天框是否接近底部
+  let ChatTxtNearBottom = chatTxt.value.scrollHeight - (chatTxt.value.scrollTop + chatTxt.value.clientHeight)
+  if (ChatTxtNearBottom <= 200) {
+    setTimeout(() => {
+      chatTxtToEnd()
+    }, 0)
   }
 }
 
