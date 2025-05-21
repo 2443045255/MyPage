@@ -92,7 +92,9 @@ const UserMsgObj = reactive({});
 // 获取聊天记录 最近 20 条
 getUserMsgHistory(room.value, 20, (data) => {
   UserMsgObj[room.value] = data;
-
+  if (!data.length) {
+    UserMsgObj[room.value] = []
+  }
   chatTxtToEnd();
 });
 
@@ -154,9 +156,7 @@ socket.on("disconnect", () => {
 // 接收消息
 socket.on("msg", (data) => {
   nextTick(() => {
-    if (
-      UserMsgObj[room.value][UserMsgObj[room.value].length - 1].userID == data.userID
-    ) {
+    if (UserMsgObj[room.value].length && UserMsgObj[room.value][UserMsgObj[room.value].length - 1].userID == data.userID) {
       UserMsgObj[room.value][
         UserMsgObj[room.value].length - 1
       ].userMsg_Time.push(JSON.parse(data.userMsg_Time));
